@@ -526,10 +526,25 @@ function openCertificateModal(certId) {
         downloadBtn.style.display = 'inline-flex';
         downloadBtn.textContent = 'View Article';
         downloadBtn.href = cert.pdfLink;
+        downloadBtn.removeAttribute('download');
     } else {
         downloadBtn.style.display = 'inline-flex';
         downloadBtn.textContent = 'Download / View Paper';
-        downloadBtn.href = cert.pdfLink;
+        
+        // For local PDF files, use proper path
+        if (cert.pdfLink.startsWith('http')) {
+            downloadBtn.href = cert.pdfLink;
+            downloadBtn.removeAttribute('download');
+        } else {
+            downloadBtn.href = cert.pdfLink;
+            downloadBtn.setAttribute('download', '');
+            
+            // Add click handler for better download support
+            downloadBtn.addEventListener('click', function(e) {
+                // Let browser handle it normally
+                // The download attribute will trigger browser download
+            }, { once: false });
+        }
     }
 
     // Documentation Tab - Carousel Setup (or Video for SEAMEO)
