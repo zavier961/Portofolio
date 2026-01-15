@@ -461,7 +461,7 @@ function updateCarouselDisplay() {
         indicators.forEach((ind, idx) => {
             ind.classList.toggle('active', idx === currentCarouselIndex);
         });
-    }, 300);
+    }, 500);
 }
 
 function startCarouselAutoPlay() {
@@ -472,7 +472,7 @@ function startCarouselAutoPlay() {
     setTimeout(() => {
         carouselAutoPlayInterval = setInterval(() => {
             navigateCarousel(1);
-        }, 5000); // Change image every 5 seconds
+        }, 10000); // Change image every 10 seconds
     }, delayStart);
 }
 

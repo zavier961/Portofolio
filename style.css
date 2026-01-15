@@ -1609,7 +1609,7 @@ body {
     width: auto;
     height: auto;
     object-fit: contain;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.6s ease-in-out;
 }
 
 .documentation-image.fade-out {
