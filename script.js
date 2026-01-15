@@ -428,10 +428,13 @@ function initCertificateModal() {
 }
 
 function navigateCarousel(direction) {
-    const evidenceImages = certificatesData[certificatesData.findIndex(c => c.id === parseInt(document.getElementById('modal-title').getAttribute('data-cert-id')))].evidenceImages;
-    if (!evidenceImages) return;
+    const certId = document.getElementById('modal-title')?.getAttribute('data-cert-id');
+    if (!certId) return;
+    
+    const cert = certificatesData.find(c => c.id === parseInt(certId));
+    if (!cert || !cert.evidenceImages || cert.evidenceImages.length === 0) return;
 
-    currentCarouselIndex = (currentCarouselIndex + direction + evidenceImages.length) % evidenceImages.length;
+    currentCarouselIndex = (currentCarouselIndex + direction + cert.evidenceImages.length) % cert.evidenceImages.length;
     updateCarouselDisplay();
 }
 
@@ -463,9 +466,14 @@ function updateCarouselDisplay() {
 
 function startCarouselAutoPlay() {
     stopCarouselAutoPlay();
-    carouselAutoPlayInterval = setInterval(() => {
-        navigateCarousel(1);
-    }, 5000); // Change image every 5 seconds
+    
+    // Add a delay before starting autoplay so user can see the first image
+    const delayStart = 2000; // Wait 2 seconds before first auto-change
+    setTimeout(() => {
+        carouselAutoPlayInterval = setInterval(() => {
+            navigateCarousel(1);
+        }, 5000); // Change image every 5 seconds
+    }, delayStart);
 }
 
 function stopCarouselAutoPlay() {
@@ -478,11 +486,16 @@ function stopCarouselAutoPlay() {
 function resetCarouselAutoPlay() {
     const docTab = document.getElementById('cert-tab-documentation');
     if (docTab && docTab.classList.contains('active')) {
+        // Stop current autoplay and start fresh
+        stopCarouselAutoPlay();
         startCarouselAutoPlay();
     }
 }
 
 function openCertificateModal(certId) {
+    // Stop any ongoing autoplay from previous modal
+    stopCarouselAutoPlay();
+    
     const cert = certificatesData.find(c => c.id === certId);
     if (!cert) return;
 
@@ -520,6 +533,7 @@ function openCertificateModal(certId) {
     }
 
     // Documentation Tab - Carousel Setup (or Video for SEAMEO)
+    // IMPORTANT: Reset carousel index to 0 for this certificate
     currentCarouselIndex = 0;
     
     // Check if certificate has videoEmbed (SEAMEO ID 4)

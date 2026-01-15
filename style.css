@@ -1618,14 +1618,54 @@ body {
     pointer-events: none;
 }
 
-/* Carousel Navigation - HIDDEN */
+/* Carousel Navigation */
 .carousel-nav {
-    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    color: var(--chrome-silver);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    padding: 0;
 }
 
-/* Carousel Indicators - HIDDEN */
+.carousel-nav:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: var(--chrome-silver);
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.2);
+}
+
+.carousel-nav svg {
+    width: 20px;
+    height: 20px;
+}
+
+.carousel-prev {
+    left: 15px;
+}
+
+.carousel-next {
+    right: 15px;
+}
+
+/* Carousel Indicators */
 .carousel-indicators {
-    display: none;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
 }
 
 .carousel-indicator {
