@@ -372,12 +372,21 @@ let carouselAutoPlayInterval = null;
 function initCertificateModal() {
     const modal = document.getElementById('certificate-modal');
     const closeBtn = document.getElementById('close-modal');
+    const downloadBtn = document.getElementById('modal-pdf');
     
     if (closeBtn) closeBtn.addEventListener('click', closeCertificateModal);
     
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeCertificateModal();
     });
+
+    // Download button click handler
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', (e) => {
+            // Let browser handle the link normally
+            // Don't prevent default
+        });
+    }
 
     // Tab switching
     const tabBtns = document.querySelectorAll('.cert-tab-btn');
@@ -526,25 +535,14 @@ function openCertificateModal(certId) {
         downloadBtn.style.display = 'inline-flex';
         downloadBtn.textContent = 'View Article';
         downloadBtn.href = cert.pdfLink;
+        downloadBtn.target = '_blank';
         downloadBtn.removeAttribute('download');
     } else {
         downloadBtn.style.display = 'inline-flex';
         downloadBtn.textContent = 'Download / View Paper';
-        
-        // For local PDF files, use proper path
-        if (cert.pdfLink.startsWith('http')) {
-            downloadBtn.href = cert.pdfLink;
-            downloadBtn.removeAttribute('download');
-        } else {
-            downloadBtn.href = cert.pdfLink;
-            downloadBtn.setAttribute('download', '');
-            
-            // Add click handler for better download support
-            downloadBtn.addEventListener('click', function(e) {
-                // Let browser handle it normally
-                // The download attribute will trigger browser download
-            }, { once: false });
-        }
+        downloadBtn.href = cert.pdfLink;
+        downloadBtn.target = '_blank';
+        // Don't use download attribute, let browser handle it naturally
     }
 
     // Documentation Tab - Carousel Setup (or Video for SEAMEO)
