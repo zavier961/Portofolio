@@ -41,7 +41,7 @@ const certificatesData = [
     description: "Teknologi Hibrid Elektrokoagulasi-Flotasi dan Biomedikal untuk Pemurnian Limbah Cair",
     certImage: "./asset/Certificate_4th Runner Up_Scientific Paper_FUSE POLMAN Bandung_2025 - Muhammad Zavier Rizkayanto_page-0001.jpg",
     evidenceImages: ["./asset/fuse/harapan 2.JPG", "./asset/fuse/harapan 2 1.JPG", "./asset/fuse/harapn 2.3.JPG"],
-    pdfLink: "./asset/asset/Zahavir_SMKN4JAKARTA_FullPaper_TEKNOLOGI HIBRID ELEKTROKOAGULASI-FLOTASI DAN BIOMEDIKAL UNTUK SOLUSI PEMURNIAN LIMBAH CAIR BERKELANJUTAN.pdf",
+    pdfLink: "./asset/Zahavir_SMKN4JAKARTA_FullPaper_TEKNOLOGI HIBRID ELEKTROKOAGULASI-FLOTASI DAN BIOMEDIKAL UNTUK SOLUSI PEMURNIAN LIMBAH CAIR BERKELANJUTAN.pdf",
     theoryText: "Integrasi metode pra-perlakuan agen biomedikal (Eco-Enzyme & EM4) dengan proses elektrokoagulasi in situ untuk pemisahan flok polutan secara berkelanjutan.",
     toolText: "Sistem Elektrokoagulasi-Flotasi (EC-F), Reaktor Biomedikal, Elektroda Fe/Al, Agen Bioremediasi (Eco-Enzyme/EM4), Alat ukur parameter COD/BOD/TSS.",
     story: "Penelitian ini berfokus pada solusi pemurnian limbah cair di pintu air perkotaan yang kronis. Kami mengusulkan teknologi hibrid yang menggabungkan proses biologi (bioremediasi) dan elektrokimia. Tantangan utamanya adalah memecah molekul polutan yang sulit diurai (recalcitrant) agar lebih mudah diproses secara alami. Dengan sistem ini, kami berhasil merumuskan metode yang tidak hanya hemat energi, tetapi juga mampu mengurangi volume lumpur limbah hingga 50% dibandingkan metode kimia konvensional.",
