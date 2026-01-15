@@ -106,6 +106,33 @@ const certificatesData = [
 ];
 
 // ============================================
+// FILE HANDLER - Open or Download Files
+// ============================================
+function openOrDownloadFile(fileUrl) {
+    if (!fileUrl || fileUrl === '#') return;
+    
+    // If it's an external link (http/https), just open it
+    if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
+        window.open(fileUrl, '_blank', 'noopener,noreferrer');
+        return;
+    }
+    
+    // For local files, try to open in new tab/window
+    try {
+        window.open(fileUrl, '_blank', 'noopener,noreferrer');
+    } catch (error) {
+        console.error('Error opening file:', error);
+        // Fallback: try downloading
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = fileUrl.split('/').pop(); // Get filename from path
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+// ============================================
 // IMAGE LIGHTBOX SYSTEM
 // ============================================
 let lightboxImages = [];
@@ -383,8 +410,12 @@ function initCertificateModal() {
     // Download button click handler
     if (downloadBtn) {
         downloadBtn.addEventListener('click', (e) => {
-            // Let browser handle the link normally
-            // Don't prevent default
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Get current pdf link from the button
+            const pdfUrl = downloadBtn.getAttribute('href');
+            openOrDownloadFile(pdfUrl);
         });
     }
 
