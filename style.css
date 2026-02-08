@@ -73,7 +73,7 @@ body {
 }
 
 /* Navbar Container - Simple Flex Row */
-.navbar-elite > div.container {
+.navbar-elite>div.container {
     max-width: 100%;
     padding: 0 2rem;
 }
@@ -469,7 +469,7 @@ body {
     }
 }
 
-.hero-section > div.container {
+.hero-section>div.container {
     max-width: 100%;
 }
 
@@ -546,7 +546,7 @@ body {
 }
 
 /* Hero Subtitle */
-.hero-section > div > div > div > div > p:first-of-type {
+.hero-section>div>div>div>div>p:first-of-type {
     color: rgba(192, 192, 192, 0.7);
     font-size: 0.875rem;
     letter-spacing: 0.3em;
@@ -556,7 +556,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .hero-section > div > div > div > div > p:first-of-type {
+    .hero-section>div>div>div>div>p:first-of-type {
         font-size: 0.75rem;
         margin-bottom: 0.75rem;
     }
@@ -598,7 +598,7 @@ body {
 }
 
 /* Hero Description */
-.hero-section > div > div > div > div > p:not(:first-of-type) {
+.hero-section>div>div>div>div>p:not(:first-of-type) {
     color: rgba(192, 192, 192, 0.7);
     font-size: 1rem;
     line-height: 1.8;
@@ -606,7 +606,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .hero-section > div > div > div > div > p:not(:first-of-type) {
+    .hero-section>div>div>div>div>p:not(:first-of-type) {
         font-size: 0.95rem;
         margin-top: 1rem;
         line-height: 1.7;
@@ -614,7 +614,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .hero-section > div > div > div > div > p:not(:first-of-type) {
+    .hero-section>div>div>div>div>p:not(:first-of-type) {
         font-size: 0.875rem;
         line-height: 1.6;
         margin-top: 0.75rem;
@@ -2108,6 +2108,7 @@ body {
         opacity: 0;
         transform: scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -2206,5 +2207,545 @@ body {
 
     .lightbox-counter {
         font-size: 0.75rem;
+    }
+}
+
+/* ============================================
+   PNEUMATIC MODULE - INTERACTIVE LEARNING
+   SPA-Style Navigation with Unique Accents
+============================================ */
+
+/* Accent Colors for Each Circuit */
+:root {
+    --accent-circuit-a: #4A9EFF;
+    --accent-circuit-b: #22C55E;
+    --accent-circuit-c: #F97316;
+    --accent-circuit-d: #A855F7;
+    --accent-circuit-e: #EF4444;
+    --accent-circuit-f: #06B6D4;
+}
+
+/* Module Container */
+.pneumatic-module {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    background: var(--pure-black, #000000);
+    color: var(--chrome-silver, #C0C0C0);
+    /* Enforce text color */
+    z-index: 2147483647;
+    overflow-y: auto;
+
+    /* NUCLEAR FIX: Force visible, no animations */
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: none;
+    /* Controlled by JS override */
+
+    /* pointer-events: none; REMOVED to ensure interaction */
+}
+
+.pneumatic-module.active {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Header Section */
+.pneumatic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.pneumatic-nav-controls {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.pneumatic-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.125rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e5e7eb;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.pneumatic-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #ff0000;
+    color: #fff;
+}
+
+.pneumatic-nav-btn svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.pneumatic-main-title {
+    font-size: 1.875rem;
+    font-weight: 900;
+    color: #ff0000;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+/* List View */
+.pneumatic-list-view {
+    flex: 1;
+    overflow-y: auto;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.pneumatic-list-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.pneumatic-list-title {
+    font-size: 2.25rem;
+    font-weight: 900;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 1rem;
+}
+
+.pneumatic-list-subtitle {
+    font-size: 1rem;
+    color: #9ca3af;
+    max-width: 28rem;
+    margin: 0 auto;
+}
+
+.pneumatic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 90rem;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.pneumatic-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pneumatic-card:hover {
+    background: rgba(255, 0, 0, 0.08);
+    border-color: rgba(255, 0, 0, 0.3);
+    transform: translateY(-4px);
+}
+
+.pneumatic-card-icon {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0000;
+}
+
+.pneumatic-card-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.pneumatic-card-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.pneumatic-card-desc {
+    font-size: 0.875rem;
+    color: #d1d5db;
+}
+
+.pneumatic-card-detail {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    line-height: 1.5;
+}
+
+/* Detail View */
+.pneumatic-detail-view {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+.pneumatic-detail-view.pneumatic-hidden {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.pneumatic-detail-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pneumatic-detail-badge {
+    display: inline-block;
+    background: rgba(255, 0, 0, 0.15);
+    color: #ff6b6b;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.pneumatic-detail-title {
+    font-size: 2.25rem;
+    font-weight: 900;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+.pneumatic-detail-subtitle {
+    font-size: 1.125rem;
+    color: #9ca3af;
+}
+
+/* Content Wrapper */
+.pneumatic-content-wrapper {
+    max-width: 90rem;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Sections */
+.pneumatic-section {
+    margin-bottom: 3rem;
+}
+
+.pneumatic-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+}
+
+.pneumatic-section-header svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #ff0000;
+    flex-shrink: 0;
+}
+
+.pneumatic-section-header h3 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+/* Media Grid */
+.pneumatic-media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.pneumatic-media-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.pneumatic-media-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #d1d5db;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pneumatic-video-container,
+.pneumatic-photo-container {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+}
+
+.pneumatic-video-container iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.pneumatic-photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Simulation Box */
+.pneumatic-simulation-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.pneumatic-simulation-image {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+}
+
+.pneumatic-simulation-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pneumatic-simulation-desc {
+    font-size: 0.95rem;
+    color: #d1d5db;
+    line-height: 1.7;
+    padding: 1.5rem;
+    background: rgba(255, 0, 0, 0.05);
+    border-left: 3px solid #ff0000;
+    border-radius: 0.375rem;
+}
+
+/* Two Column Layout */
+.pneumatic-two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.pneumatic-guide-content,
+.pneumatic-flowchart {
+    font-size: 0.95rem;
+    color: #d1d5db;
+    line-height: 1.7;
+}
+
+.pneumatic-guide-content ul,
+.pneumatic-guide-content ol {
+    margin-left: 1.5rem;
+    margin-top: 1rem;
+}
+
+.pneumatic-guide-content li {
+    margin-bottom: 0.75rem;
+    color: #d1d5db;
+}
+
+.pneumatic-flowchart img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Practice Case */
+.pneumatic-practice-case {
+    background: rgba(255, 0, 0, 0.05);
+    border: 1px solid rgba(255, 0, 0, 0.15);
+    border-radius: 0.75rem;
+    padding: 2rem;
+}
+
+.pneumatic-challenge-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.pneumatic-challenge-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(255, 0, 0, 0.15);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0000;
+}
+
+.pneumatic-challenge-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.pneumatic-challenge-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+.pneumatic-challenge-desc {
+    font-size: 0.95rem;
+    color: #d1d5db;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.pneumatic-hints {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+}
+
+.pneumatic-hints-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #d1d5db;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pneumatic-hints-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pneumatic-hints-list li {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.pneumatic-hints-list li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #ff0000;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .pneumatic-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .pneumatic-simulation-box,
+    .pneumatic-two-column {
+        grid-template-columns: 1fr;
+    }
+
+    .pneumatic-media-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .pneumatic-header {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .pneumatic-nav-controls {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .pneumatic-nav-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pneumatic-main-title {
+        font-size: 1.5rem;
+    }
+
+    .pneumatic-list-view {
+        padding: 1.5rem 1rem;
+    }
+
+    .pneumatic-detail-view {
+        padding: 1.5rem 1rem;
+    }
+
+    .pneumatic-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pneumatic-detail-title {
+        font-size: 1.75rem;
+    }
+
+    .pneumatic-section-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
