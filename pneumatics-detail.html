@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html class="dark" lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title id="page-title">Pneumatic Project Detail</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
     <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -45,24 +49,28 @@
             },
         }
     </script>
-    
+
     <style>
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #141414; 
+            background: #141414;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #333; 
+            background: #333;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: #bfbfbf; 
+            background: #bfbfbf;
         }
     </style>
 </head>
+
 <body class="bg-pure-black text-chrome-silver antialiased">
 
     <!-- Top Navigation Bar -->
@@ -70,10 +78,12 @@
         <div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary text-3xl">precision_manufacturing</span>
-                <h1 class="text-white text-lg font-bold tracking-tight uppercase">Pneumatic Workshop <span class="text-primary/50 font-light mx-2">|</span> <span id="project-code">PN-000</span></h1>
+                <h1 class="text-white text-lg font-bold tracking-tight uppercase">Pneumatic Workshop <span
+                        class="text-primary/50 font-light mx-2">|</span> <span id="project-code">PN-000</span></h1>
             </div>
             <div class="flex items-center gap-4">
-                <div class="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                <div
+                    class="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
                     <span class="text-xs font-bold text-primary">JD</span>
                 </div>
             </div>
@@ -81,7 +91,7 @@
     </div>
 
     <main class="flex-grow w-full max-w-[1200px] mx-auto px-6 py-8 flex flex-col gap-8">
-        
+
         <!-- Breadcrumb & Back Button -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex items-center text-sm text-primary/50 font-mono">
@@ -89,8 +99,10 @@
                 <span class="mx-2">/</span>
                 <span class="text-white" id="breadcrumb-title">Project</span>
             </div>
-            <a href="pneumatics.html" class="group flex items-center gap-2 px-4 py-2 bg-transparent border border-primary/30 hover:border-primary rounded-lg text-primary hover:text-white transition-all w-fit">
-                <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            <a href="pneumatics.html"
+                class="group flex items-center gap-2 px-4 py-2 bg-transparent border border-primary/30 hover:border-primary rounded-lg text-primary hover:text-white transition-all w-fit">
+                <span
+                    class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
                 <span class="text-sm font-bold uppercase tracking-wider">Back to Workshop</span>
             </a>
         </div>
@@ -106,15 +118,19 @@
         <!-- Section 1: Media Gallery -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Video Player / Main Image -->
-            <div class="lg:col-span-3 relative group overflow-hidden rounded-xl border border-primary/20 bg-surface-dark aspect-video flex items-center justify-center bg-black">
+            <div
+                class="lg:col-span-3 relative group overflow-hidden rounded-xl border border-primary/20 bg-surface-dark aspect-video flex items-center justify-center bg-black">
                 <div id="main-media" class="absolute inset-0 bg-cover bg-center opacity-80"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <button class="relative z-10 h-16 w-16 flex items-center justify-center rounded-full bg-primary/90 text-background-dark hover:scale-110 transition-transform shadow-[0_0_20px_rgba(191,191,191,0.3)]" onclick="playVideo()">
+                <button
+                    class="relative z-10 h-16 w-16 flex items-center justify-center rounded-full bg-primary/90 text-background-dark hover:scale-110 transition-transform shadow-[0_0_20px_rgba(191,191,191,0.3)]"
+                    onclick="playVideo()">
                     <span class="material-symbols-outlined text-4xl ml-1">play_arrow</span>
                 </button>
                 <div class="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-end">
                     <div>
-                        <span class="text-xs font-mono text-primary/80 uppercase mb-1 block" id="media-label">Documentation</span>
+                        <span class="text-xs font-mono text-primary/80 uppercase mb-1 block"
+                            id="media-label">Documentation</span>
                         <h3 id="media-title" class="text-lg font-bold text-white">Project Media</h3>
                     </div>
                 </div>
@@ -126,7 +142,9 @@
             <!-- Description Panel -->
             <div class="flex flex-col gap-6">
                 <div>
-                    <h3 class="text-xl font-bold uppercase tracking-wide text-primary border-b border-primary/20 pb-2 mb-4">Project Objective</h3>
+                    <h3
+                        class="text-xl font-bold uppercase tracking-wide text-primary border-b border-primary/20 pb-2 mb-4">
+                        Project Objective</h3>
                     <p id="project-objective" class="text-primary/80 leading-relaxed text-sm lg:text-base">
                         Project description will be loaded here...
                     </p>
@@ -138,14 +156,19 @@
 
             <!-- Schematic Viewer -->
             <div class="bg-surface-light rounded-xl border border-primary/20 p-1 flex flex-col h-full min-h-[300px]">
-                <div class="bg-surface-dark rounded-lg flex-grow relative overflow-hidden flex items-center justify-center p-6 cursor-pointer group hover:opacity-75 transition-opacity" onclick="viewSchematicFull()">
-                    <div id="schematic-image" class="w-full h-full relative opacity-80 bg-cover bg-center group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
+                <div class="bg-surface-dark rounded-lg flex-grow relative overflow-hidden flex items-center justify-center p-6 cursor-pointer group hover:opacity-75 transition-opacity"
+                    onclick="viewSchematicFull()">
+                    <div id="schematic-image"
+                        class="w-full h-full relative opacity-80 bg-cover bg-center group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
                         <span class="material-symbols-outlined text-white text-4xl">zoom_in</span>
                     </div>
                 </div>
                 <div class="px-4 py-3 flex justify-between items-center bg-surface-light rounded-b-lg">
-                    <span class="text-xs font-bold text-primary/70 uppercase tracking-widest">ISO 1219-1 Schematic</span>
+                    <span class="text-xs font-bold text-primary/70 uppercase tracking-widest">ISO 1219-1
+                        Schematic</span>
                     <span class="text-xs font-mono text-primary/40" id="schematic-rev">REV 1.0</span>
                 </div>
             </div>
@@ -153,7 +176,9 @@
 
         <!-- Section 3: Simulation Screenshot -->
         <div class="relative w-full rounded-xl border border-primary/20 overflow-hidden bg-surface-dark group">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-20"></div>
+            <div
+                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-20">
+            </div>
             <div class="p-4 bg-[#1e1e1e] border-b border-primary/10 flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary text-sm">terminal</span>
@@ -165,43 +190,16 @@
                     <span class="h-3 w-3 rounded-full bg-green-500/20 border border-green-500/50"></span>
                 </div>
             </div>
-            <div id="simulation-image" class="relative w-full min-h-[400px] bg-[#2b2b2b] overflow-hidden bg-cover bg-center flex items-center justify-center"></div>
-            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 px-4 py-2 rounded-full border border-primary/30 flex items-center gap-3 shadow-lg">
+            <div id="simulation-image"
+                class="relative w-full min-h-[400px] bg-[#2b2b2b] overflow-hidden bg-cover bg-center flex items-center justify-center">
+            </div>
+            <div
+                class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 px-4 py-2 rounded-full border border-primary/30 flex items-center gap-3 shadow-lg">
                 <span class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
                 <span class="text-xs font-mono text-primary">Simulation Ready</span>
             </div>
         </div>
 
-        <!-- Section 4: Problem Solving -->
-        <div class="w-full rounded-xl overflow-hidden border border-accent-maroon/30 bg-surface-dark relative mt-4">
-            <div class="bg-gradient-to-r from-accent-maroon/20 to-transparent border-b border-accent-maroon/20 p-4 flex items-center gap-3">
-                <div class="p-2 bg-accent-maroon/20 rounded text-accent-maroon-light">
-                    <span class="material-symbols-outlined text-xl">build_circle</span>
-                </div>
-                <div>
-                    <h3 class="text-white font-bold uppercase tracking-wider text-sm">Engineering Challenge & Resolution</h3>
-                    <p id="case-study-label" class="text-accent-maroon-light text-xs font-mono">CASE STUDY</p>
-                </div>
-            </div>
-            <div class="p-6 md:p-8 grid md:grid-cols-2 gap-8 relative">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-accent-maroon/5 rounded-bl-full pointer-events-none"></div>
-                <div class="space-y-3">
-                    <h4 class="text-primary text-sm font-bold uppercase border-l-2 border-red-500/50 pl-3">The Problem</h4>
-                    <p id="problem-text" class="text-gray-400 text-sm leading-relaxed">
-                        Problem description will be loaded here...
-                    </p>
-                </div>
-                <div class="space-y-3">
-                    <h4 class="text-primary text-sm font-bold uppercase border-l-2 border-green-500/50 pl-3">The Solution</h4>
-                    <p id="solution-text" class="text-gray-400 text-sm leading-relaxed">
-                        Solution description will be loaded here...
-                    </p>
-                    <div id="metric-comparison" class="mt-4 pt-4 border-t border-white/5 flex gap-4">
-                        <!-- Metrics will be inserted here -->
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </main>
 
@@ -216,4 +214,5 @@
 
     <script src="pneumatics-detail.js"></script>
 </body>
+
 </html>

@@ -1,149 +1,5 @@
 // Project data structure - tinggal isi dengan konten yang diperlukan
 const projectsDetail = {
-    'valve-assembly': {
-        code: 'PN-01',
-        title: 'Valve Assembly A-1',
-        breadcrumb: 'Valve Assembly',
-        type: 'Pure Pneumatic',
-        tags: ['Pure Pneumatic', 'Air Logic', 'Industrial Grade'],
-        mainImage: './asset/pneumatic/valve-assembly.jpg',
-        mediaLabel: 'System Documentation',
-        mediaTitle: 'Valve Assembly Operation',
-        objective: 'Pure pneumatic airflow modulation system designed for heavy industrial applications. This valve assembly features non-electric regulation mechanisms optimized for continuous operation in demanding manufacturing environments with precise pressure control.',
-        specs: [
-            { label: 'Operating Pressure', value: '6.0 bar' },
-            { label: 'Flow Rate', value: '120 L/min' }
-        ],
-        schematic: './asset/pneumatic/valve-schematic.jpg',
-        schematicRev: 'REV 2.0',
-        simulation: './asset/pneumatic/valve-simulation.jpg',
-        problem: 'During initial assembly, pressure fluctuations caused inconsistent valve response times, leading to airflow instability in downstream components.',
-        solution: 'Implemented a regulator module and installed check valves at each inlet port. This stabilized pressure variation to ±0.2 bar and improved response time by 40%.',
-        metrics: [
-            { label: 'Old Pressure Swing', value: '±0.8 bar', color: 'red' },
-            { label: 'New Pressure Swing', value: '±0.2 bar', color: 'green' }
-        ]
-    },
-    'solenoid-piston': {
-        code: 'EP-02',
-        title: 'Solenoid Piston',
-        breadcrumb: 'Solenoid Piston',
-        type: 'Electro-Pneumatic',
-        tags: ['Electro-Pneumatic', 'Dual Action', 'Rapid Cycling'],
-        mainImage: './asset/pneumatic/solenoid-piston.jpg',
-        mediaLabel: 'Live Demonstration',
-        mediaTitle: 'Dual-Action Cylinder Operation',
-        objective: 'Dual-action cylinder mechanics driven by electro-pneumatic solenoids for rapid industrial cycling. This system enables precise electronic control of pneumatic cylinders with electromagnetic actuation at millisecond response times.',
-        specs: [
-            { label: 'Operating Pressure', value: '6.0 bar' },
-            { label: 'Cycle Time', value: '2.8 sec' }
-        ],
-        schematic: './asset/pneumatic/solenoid-schematic.jpg',
-        schematicRev: 'REV 1.5',
-        simulation: './asset/pneumatic/solenoid-simulation.jpg',
-        problem: 'Solenoid overheating during extended operation caused coil burnout after 8 hours of continuous use, reducing system availability.',
-        solution: 'Upgraded to PWM-controlled duty cycle management and installed heat dissipation fins. Also added thermal monitoring circuit. Extended operational time to 48+ hours without failure.',
-        metrics: [
-            { label: 'Old MTBF', value: '8 hours', color: 'red' },
-            { label: 'New MTBF', value: '48+ hours', color: 'green' }
-        ]
-    },
-    'airflow-regulator': {
-        code: 'PN-03',
-        title: 'Airflow Regulator',
-        breadcrumb: 'Airflow Regulator',
-        type: 'Pure Pneumatic',
-        tags: ['Pure Pneumatic', 'Micro Adjustment', 'Regulation'],
-        mainImage: './asset/pneumatic/airflow-regulator.jpg',
-        mediaLabel: 'Precision Control',
-        mediaTitle: 'Airflow Adjustment Mechanism',
-        objective: 'Mechanical micro-adjustment system for sensitive pure pneumatic environments. This regulator provides fine-grain control over airflow without electronic intervention, perfect for precision applications.',
-        specs: [
-            { label: 'Pressure Range', value: '0-10 bar' },
-            { label: 'Adjustment Resolution', value: '0.1 bar' }
-        ],
-        schematic: './asset/pneumatic/regulator-schematic.jpg',
-        schematicRev: 'REV 2.2',
-        simulation: './asset/pneumatic/regulator-simulation.jpg',
-        problem: 'Manual adjustment was imprecise, requiring constant recalibration due to pilot pressure variations in the main supply.',
-        solution: 'Added pilot-operated relief valve and integrated compensator. Pressure variance reduced to ±0.05 bar with self-compensating design.',
-        metrics: [
-            { label: 'Old Variance', value: '±0.3 bar', color: 'red' },
-            { label: 'New Variance', value: '±0.05 bar', color: 'green' }
-        ]
-    },
-    'digital-compressor': {
-        code: 'EP-04',
-        title: 'Digital Compressor',
-        breadcrumb: 'Digital Compressor',
-        type: 'Electro-Pneumatic',
-        tags: ['Electro-Pneumatic', 'IoT Integrated', 'Automated'],
-        mainImage: './asset/pneumatic/digital-compressor.jpg',
-        mediaLabel: 'System Monitoring',
-        mediaTitle: 'Compressor Status Dashboard',
-        objective: 'Electronically monitored compressor system for automated assembly lines with full IoT integration. Provides real-time monitoring, predictive maintenance alerts, and automated pressure management for continuous operation.',
-        specs: [
-            { label: 'Nominal Pressure', value: '8.0 bar' },
-            { label: 'Flow Capacity', value: '250 L/min' }
-        ],
-        schematic: './asset/pneumatic/compressor-schematic.jpg',
-        schematicRev: 'REV 1.8',
-        simulation: './asset/pneumatic/compressor-simulation.jpg',
-        problem: 'Unscheduled compressor downtime occurred due to inability to predict maintenance needs. Manual pressure monitoring was unreliable.',
-        solution: 'Deployed IoT sensors for real-time monitoring and predictive algorithms. Automated pressure management reduces energy consumption by 18% and MTBF improved to 2000+ hours.',
-        metrics: [
-            { label: 'Old Energy Consumption', value: '+18%', color: 'red' },
-            { label: 'New Energy Efficiency', value: '-18%', color: 'green' }
-        ]
-    },
-    'control-circuit': {
-        code: 'EP-05',
-        title: 'Control Circuit',
-        breadcrumb: 'Control Circuit',
-        type: 'Electro-Pneumatic',
-        tags: ['Electro-Pneumatic', 'PLC Logic', 'Sequential Control'],
-        mainImage: './asset/pneumatic/control-circuit.jpg',
-        mediaLabel: 'Logic Demonstration',
-        mediaTitle: 'Valve Array Control Sequence',
-        objective: 'Integrated logic control units for electro-pneumatic valve arrays with full PLC compatibility. Enables complex sequential valve coordination for advanced automated pneumatic systems with millisecond timing precision.',
-        specs: [
-            { label: 'Operating Voltage', value: '24 VDC' },
-            { label: 'Response Time', value: '50 ms' }
-        ],
-        schematic: './asset/pneumatic/circuit-schematic.jpg',
-        schematicRev: 'REV 3.0',
-        simulation: './asset/pneumatic/circuit-simulation.jpg',
-        problem: 'Ladder logic conflicts caused timing errors in sequence execution, with 3% failure rate in complex multi-valve operations.',
-        solution: 'Implemented state machine architecture with conflict resolution algorithm. Failure rate reduced to 0.1% with improved synchronization timing.',
-        metrics: [
-            { label: 'Old Failure Rate', value: '3%', color: 'red' },
-            { label: 'New Failure Rate', value: '0.1%', color: 'green' }
-        ]
-    },
-    'air-distribution': {
-        code: 'PN-06',
-        title: 'Air Distribution',
-        breadcrumb: 'Air Distribution',
-        type: 'Pure Pneumatic',
-        tags: ['Pure Pneumatic', 'Infrastructure', 'Multi-Zone'],
-        mainImage: './asset/pneumatic/air-distribution.jpg',
-        mediaLabel: 'Network Overview',
-        mediaTitle: 'Distribution System Layout',
-        objective: 'Pure pneumatic distribution infrastructure engineered for multi-story manufacturing facilities. Manages airflow across multiple zones with individual pressure regulation, leak detection, and modular maintenance design.',
-        specs: [
-            { label: 'Total Piping', value: '250 meters' },
-            { label: 'Pressure Drop Max', value: '0.3 bar' }
-        ],
-        schematic: './asset/pneumatic/distribution-schematic.jpg',
-        schematicRev: 'REV 2.5',
-        simulation: './asset/pneumatic/distribution-simulation.jpg',
-        problem: 'Compressed air leaks at joint connections resulted in 15% energy loss throughout the facility. Maintenance was difficult due to rigid piping.',
-        solution: 'Replaced rigid piping with modular quick-connect system and installed ultrasonic leak detection. Reduced energy loss to 2% and maintenance time by 60%.',
-        metrics: [
-            { label: 'Old Energy Loss', value: '15%', color: 'red' },
-            { label: 'New Energy Loss', value: '2%', color: 'green' }
-        ]
-    },
     'relay-control': {
         code: 'EP-07',
         title: 'Rangkaian A+B+B-A- 4 Relay dengan 3 Lampu',
@@ -173,7 +29,7 @@ const projectsDetail = {
 
 // Load project data on page load
 document.addEventListener('DOMContentLoaded', function () {
-    const projectId = new URLSearchParams(window.location.search).get('project') || 'valve-assembly';
+    const projectId = new URLSearchParams(window.location.search).get('project') || 'relay-control';
     loadProjectDetail(projectId);
 });
 
@@ -256,18 +112,6 @@ function loadProjectDetail(projectId) {
         simulationImageElement.innerHTML = '';
     }
 
-    // Update case study
-    document.getElementById('problem-text').textContent = project.problem;
-    document.getElementById('solution-text').textContent = project.solution;
-
-    const metricsHtml = project.metrics.map(metric => `
-        <div class="flex flex-col">
-            <span class="text-[10px] uppercase text-gray-500 font-bold">${metric.label}</span>
-            <span class="text-${metric.color}-400/80 font-mono text-sm">${metric.value}</span>
-        </div>
-        <div class="w-px bg-white/10 h-8"></div>
-    `).join('');
-    document.getElementById('metric-comparison').innerHTML = metricsHtml.slice(0, -29); // Remove last divider
 }
 
 // Function to update main media when thumbnail is clicked
@@ -284,7 +128,7 @@ function navigateToDetail(projectId) {
 // Placeholder video function
 function playVideo() {
     const playButton = event.target.closest('button');
-    const project = projectsDetail[new URLSearchParams(window.location.search).get('project') || 'valve-assembly'];
+    const project = projectsDetail[new URLSearchParams(window.location.search).get('project') || 'relay-control'];
     const mediaTitle = document.getElementById('media-title').textContent;
 
     // Check if there's a video path in data attribute (main media video)
@@ -332,7 +176,7 @@ function playVideo() {
 
 // Function to view schematic in fullscreen modal
 function viewSchematicFull() {
-    const project = projectsDetail[new URLSearchParams(window.location.search).get('project') || 'valve-assembly'];
+    const project = projectsDetail[new URLSearchParams(window.location.search).get('project') || 'relay-control'];
     const schematicSrc = project.schematic;
 
     const modal = document.createElement('div');
