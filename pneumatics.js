@@ -1,9 +1,9 @@
 // Project data with codes, images, and descriptions
 const projectData = {
-    'valve-assembly': {
-        title: 'Valve Assembly A-1',
-        category: 'Pure Pneumatic',
-        code: `// Valve Assembly Control Logic
+  'valve-assembly': {
+    title: 'Valve Assembly A-1',
+    category: 'Pure Pneumatic',
+    code: `// Valve Assembly Control Logic
 // Pure Pneumatic System - Non-Electric Regulation
 
 #define VALVE_PIN 8
@@ -29,13 +29,13 @@ void loop() {
   
   delay(500);
 }`,
-        image: './asset/pneumatic/valve-assembly.jpg',
-        description: 'Pure pneumatic airflow modulation system for heavy industrial applications. This valve assembly features non-electric regulation mechanisms and is designed for continuous operation in demanding manufacturing environments.'
-    },
-    'solenoid-piston': {
-        title: 'Solenoid Piston',
-        category: 'Electro-Pneumatic',
-        code: `// Solenoid Piston Controller
+    image: './asset/pneumatic/valve-assembly.jpg',
+    description: 'Pure pneumatic airflow modulation system for heavy industrial applications. This valve assembly features non-electric regulation mechanisms and is designed for continuous operation in demanding manufacturing environments.'
+  },
+  'solenoid-piston': {
+    title: 'Solenoid Piston',
+    category: 'Electro-Pneumatic',
+    code: `// Solenoid Piston Controller
 // Dual-Action Cylinder with Electro-Pneumatic Solenoids
 
 #define SOLENOID_A 6
@@ -65,13 +65,13 @@ void loop() {
   activateCycleA();
   activateCycleB();
 }`,
-        image: './asset/pneumatic/solenoid-piston.jpg',
-        description: 'Dual-action cylinder mechanics driven by electro-pneumatic solenoids for rapid industrial cycling. This system enables precise control of pneumatic cylinders with electromagnetic actuation.'
-    },
-    'airflow-regulator': {
-        title: 'Airflow Regulator',
-        category: 'Pure Pneumatic',
-        code: `// Airflow Regulator Control
+    image: './asset/pneumatic/solenoid-piston.jpg',
+    description: 'Dual-action cylinder mechanics driven by electro-pneumatic solenoids for rapid industrial cycling. This system enables precise control of pneumatic cylinders with electromagnetic actuation.'
+  },
+  'airflow-regulator': {
+    title: 'Airflow Regulator',
+    category: 'Pure Pneumatic',
+    code: `// Airflow Regulator Control
 // Mechanical Micro-adjustment for Pure Pneumatic
 
 #define PRESSURE_SENSOR A0
@@ -102,13 +102,13 @@ void loop() {
   
   delay(100);
 }`,
-        image: './asset/pneumatic/airflow-regulator.jpg',
-        description: 'Mechanical micro-adjustment system for sensitive pure pneumatic environments. This regulator provides fine-grain control over airflow without electronic intervention.'
-    },
-    'digital-compressor': {
-        title: 'Digital Compressor',
-        category: 'Electro-Pneumatic',
-        code: `// Digital Compressor Monitoring System
+    image: './asset/pneumatic/airflow-regulator.jpg',
+    description: 'Mechanical micro-adjustment system for sensitive pure pneumatic environments. This regulator provides fine-grain control over airflow without electronic intervention.'
+  },
+  'digital-compressor': {
+    title: 'Digital Compressor',
+    category: 'Electro-Pneumatic',
+    code: `// Digital Compressor Monitoring System
 // IoT-Integrated Automated Assembly
 
 #include <WiFi.h>
@@ -157,13 +157,13 @@ void loop() {
   monitorSystem();
   delay(500);
 }`,
-        image: './asset/pneumatic/digital-compressor.jpg',
-        description: 'Electronically monitored compressor system for automated assembly lines with IoT integration. Provides real-time monitoring and automated pressure management for continuous operation.'
-    },
-    'control-circuit': {
-        title: 'Control Circuit',
-        category: 'Electro-Pneumatic',
-        code: `// PLC-Compatible Control Circuit
+    image: './asset/pneumatic/digital-compressor.jpg',
+    description: 'Electronically monitored compressor system for automated assembly lines with IoT integration. Provides real-time monitoring and automated pressure management for continuous operation.'
+  },
+  'control-circuit': {
+    title: 'Control Circuit',
+    category: 'Electro-Pneumatic',
+    code: `// PLC-Compatible Control Circuit
 // Logic Control for Electro-Pneumatic Valve Arrays
 
 #define VALVE_1 3
@@ -222,13 +222,13 @@ void loop() {
     digitalWrite(VALVE_3, LOW);
   }
 }`,
-        image: './asset/pneumatic/control-circuit.jpg',
-        description: 'Integrated logic control units for electro-pneumatic valve arrays with PLC compatibility. Enables sequential control and complex valve coordination for automated pneumatic systems.'
-    },
-    'air-distribution': {
-        title: 'Air Distribution',
-        category: 'Pure Pneumatic',
-        code: `// Air Distribution Network Management
+    image: './asset/pneumatic/control-circuit.jpg',
+    description: 'Integrated logic control units for electro-pneumatic valve arrays with PLC compatibility. Enables sequential control and complex valve coordination for automated pneumatic systems.'
+  },
+  'air-distribution': {
+    title: 'Air Distribution',
+    category: 'Pure Pneumatic',
+    code: `// Air Distribution Network Management
 // Multi-Story Manufacturing Facility Infrastructure
 
 #define MAIN_COMPRESSOR 10
@@ -275,43 +275,77 @@ void loop() {
   monitorAllZones();
   delay(1000);
 }`,
-        image: './asset/pneumatic/air-distribution.jpg',
-        description: 'Pure pneumatic distribution infrastructure designed for multi-story manufacturing facilities. Manages airflow across multiple zones with individual pressure regulation.'
-    }
+    image: './asset/pneumatic/air-distribution.jpg',
+    description: 'Pure pneumatic distribution infrastructure designed for multi-story manufacturing facilities. Manages airflow across multiple zones with individual pressure regulation.'
+  }
 };
 
 // Initialize page
-document.addEventListener('DOMContentLoaded', function() {
-    // Make cards clickable for detailed view
-    const cards = document.querySelectorAll('[data-project]');
-    cards.forEach(card => {
-        card.addEventListener('click', function() {
-            const projectId = this.getAttribute('data-project');
-            showProjectDetail(projectId);
-        });
+document.addEventListener('DOMContentLoaded', function () {
+  // Make cards clickable for detailed view
+  const cards = document.querySelectorAll('[data-project]');
+  cards.forEach(card => {
+    card.addEventListener('click', function () {
+      const projectId = this.getAttribute('data-project');
+      showProjectDetail(projectId);
     });
+  });
 
-    // Close button functionality (backup - primary is through <a> tag)
-    const closeBtn = document.querySelector('[aria-label="Close and return to workshop"]');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = 'index.html#workshop';
-        });
-    }
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Remove active classes
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-chrome', 'text-black');
+        b.classList.add('bg-card-dark', 'text-gray-400');
+      });
+
+      // Add active class to clicked button
+      this.classList.remove('bg-card-dark', 'text-gray-400');
+      this.classList.add('bg-chrome', 'text-black');
+
+      const filterValue = this.getAttribute('data-filter');
+
+      projectCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+
+        if (filterValue === 'all' || category === filterValue) {
+          card.style.display = 'block';
+          // Optional: reset animation to replay fade-in
+          card.style.animation = 'none';
+          card.offsetHeight; /* trigger reflow */
+          card.style.animation = null;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Close button functionality (backup - primary is through <a> tag)
+  const closeBtn = document.querySelector('[aria-label="Close and return to workshop"]');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.location.href = 'index.html#workshop';
+    });
+  }
 });
 
 // Show detailed project view
 function showProjectDetail(projectId) {
-    const project = projectData[projectId];
-    console.log('Project selected:', project.title);
-    
-    // Create modal or navigate to detail page
-    // You can expand this to show code, images, and full descriptions
-    alert(`${project.title}\n\n${project.description}\n\nFull code and schematic view coming soon!`);
+  const project = projectData[projectId];
+  console.log('Project selected:', project.title);
+
+  // Create modal or navigate to detail page
+  // You can expand this to show code, images, and full descriptions
+  alert(`${project.title}\n\n${project.description}\n\nFull code and schematic view coming soon!`);
 }
 
 // Function to navigate to detail page
 function navigateToDetail(projectId) {
-    window.location.href = `pneumatics-detail.html?project=${projectId}`;
+  window.location.href = `pneumatics-detail.html?project=${projectId}`;
 }
