@@ -112,7 +112,7 @@ const certificatesData = [
         certImage: [
             "./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-1.jpg",
             "./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-2.jpg",
-            "./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-3.jpg"
+            "./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-3.jpg",
         ],
         evidenceImages: [
             "./asset/stip/winner_stip.jpg",
