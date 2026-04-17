@@ -568,11 +568,20 @@ function openCertificateModal(certId) {
 
     // Certificate Tab - Image (Centered)
     const certImage = document.getElementById('modal-cert-image');
-    certImage.src = cert.certImage;
+
+    // Handle case where certImage is an array
+    const certImageSrc = Array.isArray(cert.certImage) ? cert.certImage[0] : cert.certImage;
+    const certImageList = Array.isArray(cert.certImage) ? cert.certImage : [cert.certImage];
+
+    certImage.src = certImageSrc;
     certImage.onerror = () => certImage.src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400"%3E%3Crect fill="%231A1A1A"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23C0C0C0" font-size="14"%3E${cert.title}%3C/text%3E%3C/svg%3E`;
 
-    // Attach lightbox to certificate image
-    attachLightboxToImage(certImage);
+    // Attach lightbox to certificate image using onclick to avoid multiple event listeners
+    certImage.style.cursor = 'zoom-in';
+    certImage.onclick = (e) => {
+        e.stopPropagation();
+        openLightbox(certImageSrc, certImageList);
+    };
 
     // Certificate Tab - Story & Description
     const fullDesc = `${cert.theoryText} ${cert.toolText || ''}`;
