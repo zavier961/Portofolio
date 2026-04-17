@@ -107,9 +107,13 @@ const certificatesData = [
         id: 6,
         title: "1st Winner - LKTI Appropriate Technology STIP Jakarta 2026",
         category: "science",
-        badge: "Champion",
+        badge: "Scientific Paper",
         description: "Inovasi Polybag Biodegradable Cangkang Kerang-Eceng Gondok bagi Ekosistem Mangrove Berkelanjutan",
-        certImage: ["./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-3.jpg", "./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-2.jpg", "./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-1.jpg"],
+        certImage: [
+            "asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-1.jpg",
+            "asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-2.jpg",
+            "asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-3.jpg"
+        ],
         evidenceImages: [
             "./asset/stip/winner_stip.jpg",
             "./asset/stip/presentation.jpg",
