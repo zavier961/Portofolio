@@ -557,8 +557,24 @@
                 <!-- Tab 1: Certificate View -->
                 <div id="cert-tab-certificate" class="cert-tab-content active">
                     <div class="modal-image-container cert-frame-container mb-8">
-                        <div class="cert-frame">
-                            <img id="modal-cert-image" src="" alt="Certificate" class="modal-image">
+                        <div class="cert-frame" id="cert-frame-wrapper" style="overflow: hidden; touch-action: pan-y;">
+                            <img id="modal-cert-image" src="" alt="Certificate" class="modal-image"
+                                style="transition: opacity 0.3s ease-in-out;">
+                            <button class="carousel-nav carousel-prev" id="cert-carousel-prev"
+                                aria-label="Previous image" style="display: none;">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </button>
+                            <button class="carousel-nav carousel-next" id="cert-carousel-next" aria-label="Next image"
+                                style="display: none;">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <div class="carousel-indicators" id="cert-carousel-indicators" style="bottom: 10px;"></div>
                         </div>
                     </div>
 

@@ -417,6 +417,8 @@ function createCertificateCard(cert) {
 // ============================================
 let currentCarouselIndex = 0;
 let carouselAutoPlayInterval = null;
+let currentCertIndex = 0;
+let currentCertImageList = [];
 
 function initCertificateModal() {
     const modal = document.getElementById('certificate-modal');
@@ -487,6 +489,71 @@ function initCertificateModal() {
             resetCarouselAutoPlay();
         });
     }
+
+    // MAIN CERTIFICATE CAROUSEL CONTROLS
+    const certPrevBtn = document.getElementById('cert-carousel-prev');
+    const certNextBtn = document.getElementById('cert-carousel-next');
+
+    if (certPrevBtn) {
+        certPrevBtn.addEventListener('click', () => navigateCertCarousel(-1));
+    }
+    if (certNextBtn) {
+        certNextBtn.addEventListener('click', () => navigateCertCarousel(1));
+    }
+
+    // SWIPE SUPPORT FOR CERTIFICATE CAROUSEL
+    const certFrameWrapper = document.getElementById('cert-frame-wrapper');
+    if (certFrameWrapper) {
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        certFrameWrapper.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        certFrameWrapper.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            const threshold = 50;
+            if (touchendX < touchstartX - threshold) {
+                navigateCertCarousel(1); // Swipe left = next
+            } else if (touchendX > touchstartX + threshold) {
+                navigateCertCarousel(-1); // Swipe right = prev
+            }
+        }, { passive: true });
+    }
+}
+
+function navigateCertCarousel(direction) {
+    if (!currentCertImageList || currentCertImageList.length <= 1) return;
+
+    currentCertIndex = (currentCertIndex + direction + currentCertImageList.length) % currentCertImageList.length;
+    updateCertCarouselDisplay();
+}
+
+function updateCertCarouselDisplay() {
+    if (!currentCertImageList || currentCertImageList.length === 0) return;
+
+    const certImage = document.getElementById('modal-cert-image');
+    const indicators = document.querySelectorAll('#cert-carousel-indicators .carousel-indicator');
+
+    certImage.style.opacity = 0;
+
+    setTimeout(() => {
+        certImage.src = currentCertImageList[currentCertIndex];
+
+        certImage.onclick = (e) => {
+            e.stopPropagation();
+            openLightbox(currentCertImageList[currentCertIndex], currentCertImageList);
+        };
+
+        setTimeout(() => {
+            certImage.style.opacity = 1;
+        }, 50);
+
+        indicators.forEach((ind, idx) => {
+            ind.classList.toggle('active', idx === currentCertIndex);
+        });
+    }, 300);
 }
 
 function navigateCarousel(direction) {
@@ -573,7 +640,11 @@ function openCertificateModal(certId) {
     const certImageSrc = Array.isArray(cert.certImage) ? cert.certImage[0] : cert.certImage;
     const certImageList = Array.isArray(cert.certImage) ? cert.certImage : [cert.certImage];
 
+    currentCertIndex = 0;
+    currentCertImageList = certImageList;
+
     certImage.src = certImageSrc;
+    certImage.style.opacity = 1;
     certImage.onerror = () => certImage.src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400"%3E%3Crect fill="%231A1A1A"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23C0C0C0" font-size="14"%3E${cert.title}%3C/text%3E%3C/svg%3E`;
 
     // Attach lightbox to certificate image using onclick to avoid multiple event listeners
@@ -582,6 +653,36 @@ function openCertificateModal(certId) {
         e.stopPropagation();
         openLightbox(certImageSrc, certImageList);
     };
+
+    // Main Certificate Navigation & Indicators UI update
+    const certPrevBtn = document.getElementById('cert-carousel-prev');
+    const certNextBtn = document.getElementById('cert-carousel-next');
+    const certIndicators = document.getElementById('cert-carousel-indicators');
+
+    if (certImageList.length > 1) {
+        if (certPrevBtn) certPrevBtn.style.display = 'flex';
+        if (certNextBtn) certNextBtn.style.display = 'flex';
+        if (certIndicators) {
+            certIndicators.style.display = 'flex';
+            certIndicators.innerHTML = '';
+            certImageList.forEach((_, idx) => {
+                const ind = document.createElement('div');
+                ind.className = `carousel-indicator ${idx === 0 ? 'active' : ''}`;
+                ind.onclick = () => {
+                    currentCertIndex = idx;
+                    updateCertCarouselDisplay();
+                };
+                certIndicators.appendChild(ind);
+            });
+        }
+    } else {
+        if (certPrevBtn) certPrevBtn.style.display = 'none';
+        if (certNextBtn) certNextBtn.style.display = 'none';
+        if (certIndicators) {
+            certIndicators.style.display = 'none';
+            certIndicators.innerHTML = '';
+        }
+    }
 
     // Certificate Tab - Story & Description
     const fullDesc = `${cert.theoryText} ${cert.toolText || ''}`;
