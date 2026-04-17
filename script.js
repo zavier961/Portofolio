@@ -102,6 +102,24 @@ const certificatesData = [
         toolText: "Logical Reasoning, Critical Thinking, Oral Presentation, Problem Solving.",
         story: "Berhasil terpilih menjadi Finalis Nasional kategori SMK Kelas 10 dalam kompetisi yang diikuti oleh lebih dari 43.000 peserta dari seluruh Indonesia. Saya melewati berbagai tahapan ketat mulai dari seleksi internal sekolah, penyisihan, hingga Grand Final di Universitas Negeri Jakarta (UNJ). Pengalaman paling berharga adalah saat menjalani tes lisan di hadapan dewan juri untuk mempresentasikan logika pemecahan masalah secara langsung.",
         documentation: "Penyelenggara: Universitas Negeri Jakarta (UNJ). Status: Finalis Nasional (Kategori SMK Kelas 10). Tahapan: Seleksi Internal, Penyisihan, Semifinal, Grand Final (LCMS & Tes Lisan). Kompetisi ini menguji kemampuan analisis teks kompleks dan pemecahan masalah matematika tingkat tinggi."
+    },
+    {
+        id: 6,
+        title: "1st Winner - LKTI Appropriate Technology STIP Jakarta 2026",
+        category: "science",
+        badge: "Champion",
+        description: "Inovasi Polybag Biodegradable Cangkang Kerang-Eceng Gondok bagi Ekosistem Mangrove Berkelanjutan",
+        certImage: "./asset/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto_page-0001.jpg",
+        evidenceImages: [
+            "./asset/stip/winner_stip.jpg",
+            "./asset/stip/presentation.jpg",
+            "./asset/stip/product_showcase.jpg"
+        ],
+        pdfLink: "./asset/Sendy Fokus Crypto_SMKN4JAKARTA_Karya Tulis Ilmiah_Inovasi Polybag Biodegradable Cangkang Kerang-Eceng Gondok bagi Ekosistem Mangrove Berkelanjutan.pdf",
+        theoryText: "Pemanfaatan komposit serat eceng gondok sebagai matriks organik dan kalsium karbonat (CaCO3) dari limbah cangkang kerang sebagai filler mekanis untuk menciptakan polybag ramah lingkungan.",
+        toolText: "Limbah Cangkang Kerang (Anadara granosa), Eceng Gondok (Eichhornia crassipes), Pati Tapioka (Perekat), Cetakan Polybag, Mesin Penggiling, Uji Biodegradabilitas.",
+        story: "Proyek ini berangkat dari keprihatinan terhadap tingginya residu sampah plastik polybag di wilayah pesisir saat restorasi mangrove. Kami mengembangkan inovasi wadah semai yang dapat terurai secara alami dan sekaligus menutrisi tanah. Tantangan terbesarnya adalah menemukan rasio campuran yang tepat agar polybag cukup kuat menahan air namun tetap cepat terurai setelah ditanam. Hasilnya, inovasi ini berhasil memenangkan Juara 1 dalam kategori Teknologi Tepat Guna di STIP Jakarta.",
+        documentation: "Detail Proyek: Inovasi Polybag Biodegradable. Mekanisme: Sinergi cangkang kerang sebagai penguat struktur dan eceng gondok sebagai serat organik. Keunggulan: Ramah lingkungan, mendukung restorasi mangrove tanpa sampah plastik, dan memanfaatkan limbah invasif. Tim: Muhammad Zavier Rizkayanto, Azahid Pramudya Al Ghifahri, Sendy Yasho. Pembimbing: Mochammad Aldi Mauludin."
     }
 ];
 
