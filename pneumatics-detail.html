@@ -68,6 +68,30 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #bfbfbf;
         }
+
+        /* Mobile Article Optimization */
+        @media (max-width: 768px) {
+            .mobile-article-header {
+                font-size: 2rem !important;
+                line-height: 1.1 !important;
+                margin-bottom: 0.5rem !important;
+            }
+            .mobile-article-padding {
+                padding-left: 1.25rem !important;
+                padding-right: 1.25rem !important;
+            }
+            .mobile-full-bleed {
+                margin-left: -1.5rem !important;
+                margin-right: -1.5rem !important;
+                width: calc(100% + 3rem) !important;
+                border-radius: 0 !important;
+            }
+            .mobile-body-text {
+                font-size: 1.125rem !important;
+                line-height: 1.7 !important;
+                color: rgba(191, 191, 191, 0.9) !important;
+            }
+        }
     </style>
 </head>
 
@@ -90,7 +114,7 @@
         </div>
     </div>
 
-    <main class="flex-grow w-full max-w-[1200px] mx-auto px-6 py-8 flex flex-col gap-8">
+    <main class="flex-grow w-full max-w-[1200px] mx-auto px-6 py-8 flex flex-col gap-8 mobile-article-padding">
 
         <!-- Breadcrumb & Back Button -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -109,7 +133,7 @@
 
         <!-- Project Header -->
         <div class="space-y-2">
-            <h2 id="project-title" class="text-4xl font-black text-white tracking-tighter uppercase">Project Title</h2>
+            <h2 id="project-title" class="text-4xl font-black text-white tracking-tighter uppercase mobile-article-header">Project Title</h2>
             <div id="project-tags" class="flex flex-wrap gap-4 text-sm text-primary/70">
                 <!-- Tags will be inserted here -->
             </div>
@@ -119,7 +143,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Video Player / Main Image -->
             <div
-                class="lg:col-span-3 relative group overflow-hidden rounded-xl border border-primary/20 bg-surface-dark aspect-video flex items-center justify-center bg-black">
+                class="lg:col-span-3 relative group overflow-hidden rounded-xl border border-primary/20 bg-surface-dark aspect-video flex items-center justify-center bg-black mobile-full-bleed">
                 <div id="main-media" class="absolute inset-0 bg-cover bg-center opacity-80"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <button
@@ -145,7 +169,7 @@
                     <h3
                         class="text-xl font-bold uppercase tracking-wide text-primary border-b border-primary/20 pb-2 mb-4">
                         Project Objective</h3>
-                    <p id="project-objective" class="text-primary/80 leading-relaxed text-sm lg:text-base">
+                    <p id="project-objective" class="text-primary/80 leading-relaxed text-sm lg:text-base mobile-body-text">
                         Project description will be loaded here...
                     </p>
                 </div>
@@ -155,7 +179,7 @@
             </div>
 
             <!-- Schematic Viewer -->
-            <div class="bg-surface-light rounded-xl border border-primary/20 p-1 flex flex-col h-full min-h-[300px]">
+            <div class="bg-surface-light rounded-xl border border-primary/20 p-1 flex flex-col h-full min-h-[300px] mobile-full-bleed">
                 <div class="bg-surface-dark rounded-lg flex-grow relative overflow-hidden flex items-center justify-center p-6 cursor-pointer group hover:opacity-75 transition-opacity"
                     onclick="viewSchematicFull()">
                     <div id="schematic-image"
@@ -175,7 +199,7 @@
         </div>
 
         <!-- Section 3: Simulation Screenshot -->
-        <div class="relative w-full rounded-xl border border-primary/20 overflow-hidden bg-surface-dark group">
+        <div class="relative w-full rounded-xl border border-primary/20 overflow-hidden bg-surface-dark group mobile-full-bleed">
             <div
                 class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-20">
             </div>

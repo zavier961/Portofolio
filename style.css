@@ -1415,6 +1415,144 @@ body {
     overflow-wrap: break-word;
 }
 
+/* ============================================
+   MOBILE ARTICLE EXPERIENCE (DETIK STYLE)
+   ============================================ */
+@media (max-width: 768px) {
+    /* Full-screen Modals */
+    .modal-overlay {
+        padding: 0 !important;
+        background: var(--pure-black) !important;
+        align-items: flex-start !important;
+    }
+
+    .workshop-modal-container,
+    .modal-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: var(--pure-black) !important;
+        overflow-x: hidden !important;
+    }
+
+    .workshop-modal-content,
+    .modal-content {
+        padding: 5rem 1.25rem 3rem !important; /* Extra top padding for close button */
+    }
+
+    /* Article Typography */
+    .workshop-modal-title,
+    .modal-title {
+        font-size: 1.85rem !important; /* ~30px */
+        line-height: 1.2 !important;
+        font-weight: 800 !important;
+        margin-bottom: 0.75rem !important;
+        color: #fff !important;
+    }
+
+    .workshop-modal-category {
+        font-size: 0.75rem !important;
+        letter-spacing: 0.15em !important;
+        margin-bottom: 2rem !important;
+        display: block;
+        color: var(--chrome-silver) !important;
+        opacity: 0.8;
+    }
+
+    .workshop-description,
+    .modal-text {
+        font-size: 1.15rem !important; /* ~18.4px (Detik style) */
+        line-height: 1.7 !important;
+        color: rgba(192, 192, 192, 0.9) !important;
+        font-weight: 400 !important;
+    }
+
+    .modal-story-section p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 2rem !important;
+    }
+
+    /* Full-bleed Images */
+    .workshop-image-container,
+    .documentation-image-container,
+    .modal-image-container,
+    .cert-frame-container {
+        padding: 0 !important;
+        margin-left: -1.25rem !important;
+        margin-right: -1.25rem !important;
+        width: calc(100% + 2.5rem) !important;
+        border: none !important;
+        background: #000 !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .workshop-image,
+    .modal-image,
+    .documentation-image,
+    .cert-frame img {
+        width: 100% !important;
+        border-radius: 0 !important;
+        max-height: none !important;
+    }
+
+    /* Tab Controls in Modal */
+    .cert-tab-nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .cert-tab-btn {
+        flex: 1;
+        padding: 1rem 0.5rem !important;
+        font-size: 0.75rem !important;
+    }
+
+    /* Section Titles */
+    .workshop-section-title,
+    .documentation-title {
+        font-size: 0.75rem !important;
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        opacity: 0.6;
+    }
+
+    /* Close Button Polish */
+    .modal-close {
+        top: 0.75rem !important;
+        right: 0.75rem !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        backdrop-filter: blur(10px) !important;
+        border-radius: 50% !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        width: 42px !important;
+        height: 42px !important;
+    }
+
+    /* Navigation Arrows for Mobile */
+    .workshop-nav-arrow {
+        width: 36px !important;
+        height: 36px !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        backdrop-filter: blur(5px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 50% !important;
+        top: auto !important;
+        bottom: 2rem !important;
+        transform: none !important;
+    }
+
+    .workshop-nav-prev { left: 1.5rem !important; }
+    .workshop-nav-next { right: 1.5rem !important; }
+}
+
 @media (max-width: 768px) {
     .modal-title {
         font-size: 1.75rem;
@@ -2179,7 +2317,8 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    display: none; /* Hidden if only 1 image */
+    display: none;
+    /* Hidden if only 1 image */
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -2213,16 +2352,16 @@ body {
         width: 45px;
         height: 45px;
     }
-    
+
     .lightbox-nav svg {
         width: 24px;
         height: 24px;
     }
-    
+
     .lightbox-prev {
         left: 0.5rem;
     }
-    
+
     .lightbox-next {
         right: 0.5rem;
     }
