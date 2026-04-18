@@ -2168,6 +2168,66 @@ body {
     text-transform: uppercase;
 }
 
+/* Lightbox Navigation Buttons */
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    color: var(--chrome-silver);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: none; /* Hidden if only 1 image */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+}
+
+.lightbox-nav:hover {
+    background: var(--chrome-silver);
+    color: var(--pure-black);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-nav svg {
+    width: 32px;
+    height: 32px;
+    stroke-width: 2.5;
+}
+
+.lightbox-prev {
+    left: 2rem;
+}
+
+.lightbox-next {
+    right: 2rem;
+}
+
+@media (max-width: 768px) {
+    .lightbox-nav {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .lightbox-nav svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .lightbox-prev {
+        left: 0.5rem;
+    }
+    
+    .lightbox-next {
+        right: 0.5rem;
+    }
+}
+
 /* Clickable Images */
 .documentation-image,
 .modal-image,

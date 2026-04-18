@@ -163,9 +163,26 @@ let currentLightboxIndex = 0;
 function initLightbox() {
     const lightboxOverlay = document.getElementById('image-lightbox');
     const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const lightboxImage = document.getElementById('lightbox-image');
 
     if (lightboxClose) {
         lightboxClose.addEventListener('click', closeLightbox);
+    }
+
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox(-1);
+        });
+    }
+
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox(1);
+        });
     }
 
     lightboxOverlay.addEventListener('click', (e) => {
@@ -176,23 +193,93 @@ function initLightbox() {
     document.addEventListener('keydown', (e) => {
         if (lightboxOverlay.classList.contains('active')) {
             if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
         }
     });
+
+    // Swipe Support for Lightbox
+    if (lightboxImage) {
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        lightboxImage.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightboxImage.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleLightboxSwipe();
+        }, { passive: true });
+
+        function handleLightboxSwipe() {
+            const threshold = 50;
+            if (touchendX < touchstartX - threshold) {
+                navigateLightbox(1); // Swipe left = next
+            } else if (touchendX > touchstartX + threshold) {
+                navigateLightbox(-1); // Swipe right = prev
+            }
+        }
+    }
+}
+
+function navigateLightbox(direction) {
+    if (!lightboxImages || lightboxImages.length <= 1) return;
+
+    currentLightboxIndex = (currentLightboxIndex + direction + lightboxImages.length) % lightboxImages.length;
+    updateLightboxDisplay();
+}
+
+function updateLightboxDisplay() {
+    const lightboxImage = document.getElementById('lightbox-image');
+    if (!lightboxImage) return;
+
+    // Fade out
+    lightboxImage.style.opacity = 0;
+
+    setTimeout(() => {
+        lightboxImage.src = lightboxImages[currentLightboxIndex];
+        updateLightboxCounter();
+
+        // Fade in
+        setTimeout(() => {
+            lightboxImage.style.opacity = 1;
+        }, 50);
+    }, 300);
 }
 
 function openLightbox(imageSrc, imageList = []) {
     const lightbox = document.getElementById('image-lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
 
     // Set images array
     lightboxImages = imageList.length > 0 ? imageList : [imageSrc];
-    currentLightboxIndex = lightboxImages.indexOf(imageSrc);
+    
+    // Find index by matching the end of the URL (to handle absolute vs relative paths)
+    currentLightboxIndex = lightboxImages.findIndex(img => {
+        if (typeof img !== 'string') return false;
+        // Strip leading ./ and compare
+        const normalizedImg = img.replace(/^\.\//, '');
+        return imageSrc.endsWith(normalizedImg);
+    });
 
     if (currentLightboxIndex === -1) {
         currentLightboxIndex = 0;
     }
 
+    // Toggle nav buttons based on image count
+    if (lightboxImages.length > 1) {
+        if (lightboxPrev) lightboxPrev.style.display = 'flex';
+        if (lightboxNext) lightboxNext.style.display = 'flex';
+    } else {
+        if (lightboxPrev) lightboxPrev.style.display = 'none';
+        if (lightboxNext) lightboxNext.style.display = 'none';
+    }
+
     lightboxImage.src = lightboxImages[currentLightboxIndex];
+    lightboxImage.style.opacity = 1;
     updateLightboxCounter();
 
     lightbox.classList.add('active');
@@ -209,15 +296,17 @@ function closeLightbox() {
 
 function updateLightboxCounter() {
     const counter = document.getElementById('lightbox-counter');
-    counter.textContent = `${currentLightboxIndex + 1} / ${lightboxImages.length}`;
+    if (counter) {
+        counter.textContent = `${currentLightboxIndex + 1} / ${lightboxImages.length}`;
+    }
 }
 
 function attachLightboxToImage(img, imageList = []) {
     img.style.cursor = 'zoom-in';
-    img.addEventListener('click', (e) => {
+    img.onclick = (e) => {
         e.stopPropagation();
         openLightbox(img.src, imageList);
-    });
+    };
 }
 
 // ============================================
