@@ -115,9 +115,10 @@ const certificatesData = [
             "./asset/STIP/Certificate_1st Winner_LKTI Appropriate Technology_STIP Jakarta_20-21 Feb 2026_Muhammad Zavier Rizkayanto-3.jpg",
         ],
         evidenceImages: [
-            "./asset/stip/winner_stip.jpg",
-            "./asset/stip/presentation.jpg",
-            "./asset/stip/product_showcase.jpg"
+            "./asset/STIP/1.jpg",
+            "./asset/STIP/2.jpeg",
+            "./asset/STIP/3.jpeg",
+            "./asset/STIP/4.jpg"
         ],
         pdfLink: "./asset/Sendy Fokus Crypto_SMKN4JAKARTA_Karya Tulis Ilmiah_Inovasi Polybag Biodegradable Cangkang Kerang-Eceng Gondok bagi Ekosistem Mangrove Berkelanjutan.pdf",
         theoryText: "Pemanfaatan komposit serat eceng gondok sebagai matriks organik dan kalsium karbonat (CaCO3) dari limbah cangkang kerang sebagai filler mekanis untuk menciptakan polybag ramah lingkungan.",
@@ -256,7 +257,7 @@ function openLightbox(imageSrc, imageList = []) {
 
     // Set images array
     lightboxImages = imageList.length > 0 ? imageList : [imageSrc];
-    
+
     // Find index by matching the end of the URL (to handle absolute vs relative paths)
     currentLightboxIndex = lightboxImages.findIndex(img => {
         if (typeof img !== 'string') return false;
