@@ -95,7 +95,7 @@ const certificatesData = [
         category: "academic",
         badge: "National Finalist",
         description: "Finalis Nasional Kategori SMK Kelas 10 - UNJ",
-        certImage: "./asset/Finalist_Literacy_Numeracy_National_2024 - Muhammad Zavier Rizkayanto.pdf.jpg",
+        certImage: ["./asset/Finalist_Literacy_Numeracy_National_2024 - Muhammad Zavier Rizkayanto.pdf.jpg", "./asset/2.jpg"],
         evidenceImages: ["unj-final-stage.jpg", "unj-presentation.jpg", "unj-competition-news.jpg"],
         pdfLink: "https://www.detik.com/edu/edutainment/d-7663696/kompetisi-literasi-numerasi-nasional-2024-unj-diikuti-43-ribuan-siswa-ini-juaranya",
         theoryText: "Kompetisi tingkat nasional yang menguji kemampuan Higher Order Thinking Skills (HOTS) dalam literasi dan numerasi.",
