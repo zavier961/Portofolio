@@ -100,7 +100,7 @@ const certificatesData = [
         pdfLink: "https://www.detik.com/edu/edutainment/d-7663696/kompetisi-literasi-numerasi-nasional-2024-unj-diikuti-43-ribuan-siswa-ini-juaranya",
         theoryText: "Kompetisi tingkat nasional yang menguji kemampuan Higher Order Thinking Skills (HOTS) dalam literasi dan numerasi.",
         toolText: "Logical Reasoning, Critical Thinking, Oral Presentation, Problem Solving.",
-        story: "Berhasil terpilih menjadi Finalis Nasional kategori SMK Kelas 10 dalam kompetisi yang diikuti oleh lebih dari 43.000 peserta dari seluruh Indonesia. Saya melewati berbagai tahapan ketat mulai dari seleksi internal sekolah, penyisihan, hingga Grand Final di Universitas Negeri Jakarta (UNJ). Pengalaman paling berharga adalah saat menjalani tes lisan di hadapan dewan juri untuk mempresentasikan logika pemecahan masalah secara langsung.",
+        story: "Berhasil terpilih sebagai Finalis Nasional dari total lebih dari 43.000 peserta di seluruh Indonesia. Pencapaian ini diraih melalui proses seleksi berlapis, mulai dari tingkat internal sekolah hingga babak penyisihan nasional. Pada tahap Grand Final, saya menjalani ujian daring dengan protokol pengawasan ganda (dual-camera setup) yang ketat. Pengalaman utama meliputi presentasi logika pemecahan masalah secara langsung di hadapan dewan juri pada sesi tes lisan.",
         documentation: "Penyelenggara: Universitas Negeri Jakarta (UNJ). Status: Finalis Nasional (Kategori SMK Kelas 10). Tahapan: Seleksi Internal, Penyisihan, Semifinal, Grand Final (LCMS & Tes Lisan). Kompetisi ini menguji kemampuan analisis teks kompleks dan pemecahan masalah matematika tingkat tinggi."
     },
     {
