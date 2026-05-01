@@ -120,7 +120,7 @@ const certificatesData = [
             "./asset/STIP/3.jpeg",
             "./asset/STIP/4.jpg"
         ],
-        pdfLink: "./asset/Sendy Fokus Crypto_SMKN4JAKARTA_Karya Tulis Ilmiah_Inovasi Polybag Biodegradable Cangkang Kerang-Eceng Gondok bagi Ekosistem Mangrove Berkelanjutan.pdf",
+        pdfLink: "./asset/STIP/Sendy Fokus Crypto_SMKN4JAKARTA_Karya Tulis Ilmiah_Inovasi Polybag Biodegradable Cangkang Kerang-Eceng Gondok bagi Ekosistem Mangrove Berkelanjutan.pdf",
         theoryText: "Pemanfaatan komposit serat eceng gondok sebagai matriks organik dan kalsium karbonat (CaCO3) dari limbah cangkang kerang sebagai filler mekanis untuk menciptakan polybag ramah lingkungan.",
         toolText: "Limbah Cangkang Kerang (Anadara granosa), Eceng Gondok (Eichhornia crassipes), Pati Tapioka (Perekat), Cetakan Polybag, Mesin Penggiling, Uji Biodegradabilitas.",
         story: "Proyek ini berangkat dari keprihatinan terhadap tingginya residu sampah plastik polybag di wilayah pesisir saat restorasi mangrove. Kami mengembangkan inovasi wadah semai yang dapat terurai secara alami dan sekaligus menutrisi tanah. Tantangan terbesarnya adalah menemukan rasio campuran yang tepat agar polybag cukup kuat menahan air namun tetap cepat terurai setelah ditanam. Hasilnya, inovasi ini berhasil memenangkan Juara 1 dalam kategori Teknologi Tepat Guna di STIP Jakarta.",
