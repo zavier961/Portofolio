@@ -136,7 +136,7 @@ const certificatesData = [
         evidenceImages: [
             "./asset/ampibi/desain 3d.jpeg",
             "./asset/ampibi/nilai final.png",
-            "./asset/ampibi/presentation_stage.jpg"
+            "./asset/ampibi/puspresnas.png"
         ],
         pdfLink: "./asset/ampibi/MuhammadZavierRizkayanto,SISTEM_LODAYA_GUARD PEMANTAU_HUTAN_PINTAR_DENGAN_TRANSMISI_LONGRANGE_SMKN 4 JAKARTA_KTI AMPIBI2026.pdf",
         theoryText: "Implementasi Artificial Intelligence (TinyML) pada edge computing untuk deteksi audio-visual ilegal logging, diintegrasikan dengan protokol komunikasi LoRa (Long Range) untuk transmisi data jarak jauh pada area blank spot.",
