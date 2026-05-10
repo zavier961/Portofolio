@@ -129,8 +129,8 @@ const certificatesData = [
     {
         id: 7,
         title: "Juara 2 & Gold Medal - LKTI Nasional AMPIBI XIX (Puspresnas ★★★)",
-        category: "technology",
-        badge: "Gold Medal",
+        category: "Science",
+        badge: "Scientific Paper",
         description: "Sistem LODAYA GUARD: Pemantau Hutan Pintar dengan Transmisi Long Range",
         certImage: "./asset/ampibi/Juara 2 LKTI- Muhammad Zavier Rizkayanto.png",
         evidenceImages: [
