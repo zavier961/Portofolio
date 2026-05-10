@@ -129,7 +129,7 @@ const certificatesData = [
     {
         id: 7,
         title: "2nd Place & Gold Medal - National Scientific Paper AMPIBI XIX (Puspresnas ★★★)",
-        category: "Science",
+        category: "science",
         badge: "Scientific Paper",
         description: "Sistem LODAYA GUARD: Pemantau Hutan Pintar dengan Transmisi Long Range",
         certImage: "./asset/ampibi/Juara 2 LKTI- Muhammad Zavier Rizkayanto.png",
