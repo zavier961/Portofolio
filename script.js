@@ -135,12 +135,12 @@ const certificatesData = [
         certImage: "./asset/ampibi/Juara 2 LKTI- Muhammad Zavier Rizkayanto.png",
         evidenceImages: [
             "./asset/ampibi/desain 3d.jpeg",
-            "./asset/ampibi/lodaya_prototype.jpg",
+            "./asset/ampibi/nilai final.png",
             "./asset/ampibi/presentation_stage.jpg"
         ],
         pdfLink: "./asset/ampibi/MuhammadZavierRizkayanto,SISTEM_LODAYA_GUARD PEMANTAU_HUTAN_PINTAR_DENGAN_TRANSMISI_LONGRANGE_SMKN 4 JAKARTA_KTI AMPIBI2026.pdf",
         theoryText: "Implementasi Artificial Intelligence (TinyML) pada edge computing untuk deteksi audio-visual ilegal logging, diintegrasikan dengan protokol komunikasi LoRa (Long Range) untuk transmisi data jarak jauh pada area blank spot.",
-        toolText: "ESP32-S3 Sense, Modul LoRa (SX1276), Sensor Akustik, Antena Gain Tinggi, TinyML Model (Edge Impulse), Gateway IoT.",
+        toolText: "ESP32-S3 Sense,Modul kamera 5MP, Modul LoRa (SX1276), Sensor Akustik, Antena Gain Tinggi, TinyML Model (Edge Impulse), Gateway IoT.",
         story: "Proyek ini dirancang sebagai solusi atas tingginya angka deforestasi dan keterbatasan sinyal di hutan pedalaman Indonesia. Kami mengembangkan 'Lodaya Guard', perangkat cerdas yang mampu mengenali suara gergaji mesin dan aktivitas mencurigakan secara real-time menggunakan kecerdasan buatan (TinyML) langsung di perangkat. Tantangan utama yang kami selesaikan adalah bagaimana mengirimkan peringatan dari tengah hutan tanpa sinyal internet, yang kami pecahkan dengan teknologi LoRa. Prestasi ini diakui sebagai Juara 2 tingkat Nasional dengan kurasi Puspresnas Bintang 3.",
         documentation: "Detail Proyek: Sistem keamanan hutan berbasis IoT & AI. Mekanisme: Perangkat mendeteksi anomali suara/visual -> Klasifikasi lokal dengan TinyML -> Transmisi peringatan via LoRa ke pos pusat. Keunggulan: Konsumsi daya sangat rendah, jangkauan transmisi hingga beberapa kilometer, dan mampu beroperasi secara otonom. Tim: Muhammad Zavier Rizkayanto, Azahid Pramudya Al Ghifahri, Sendy Yasho. Pembimbing: Mochammad Aldi Mauludin."
     }
