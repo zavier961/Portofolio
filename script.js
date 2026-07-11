@@ -150,6 +150,20 @@ let certificatesData = [];
 let projectsData = [];
 
 // ============================================
+// PROJECTS DATABASE
+// ============================================
+const defaultProjects = [
+    {
+        id: 1,
+        title: "Project Title",
+        category: "Category / Technology",
+        desc: "Brief description of your project goes here. Highlight the key challenges, solutions, and technologies used.",
+        tags: "Tag 1, Tag 2, Tag 3",
+        image: ""
+    }
+];
+
+// ============================================
 // INDEXED DB (LOCAL STORAGE) WRAPPER (Gigabyte limit)
 // ============================================
 const DB_NAME = 'mzr_portfolio_db';
