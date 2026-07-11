@@ -21,11 +21,22 @@ function initDB() {
     }
 }
 
-// Authentication Logic
-function login() {
+// Authentication Logic with SHA-256 Hashing
+async function hashPassphrase(passphrase) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(passphrase);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+const TARGET_HASH = '4afeccb0c34a45347f473853fe1c8c7d01bcee6a3f2dab12b17c4b8960e2bce1';
+
+async function login() {
     const pin = document.getElementById('admin-pin').value;
-    // Default PIN: 1234
-    if (pin === '1234') { 
+    const hashedInput = await hashPassphrase(pin);
+    
+    if (hashedInput === TARGET_HASH) { 
         document.getElementById('auth-overlay').classList.add('opacity-0');
         setTimeout(() => {
             document.getElementById('auth-overlay').style.display = 'none';
