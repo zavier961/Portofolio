@@ -22,15 +22,39 @@ const allWorkshopProjects = Object.values(workshopProjects).flat();
 // STATE MANAGEMENT
 // ============================================
 // ============================================
-// STATE MANAGEMENT
+// STATE MANAGEMENT & PERFORMANCE CACHE
 // ============================================
 let currentFilter = 'all';
 let currentWorkshopIndex = 0;
 let currentWorkshopCategory = null;
 let modalHistoryState = null;
 
+// Convert massive Base64 strings to memory-efficient Blob URLs instantly
+const blobCache = new Map();
+function getBlobUrl(base64Data) {
+    if (!base64Data || !base64Data.startsWith('data:')) return base64Data;
+    if (blobCache.has(base64Data)) return blobCache.get(base64Data);
+    
+    try {
+        const arr = base64Data.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        const blob = new Blob([u8arr], {type:mime});
+        const url = URL.createObjectURL(blob);
+        blobCache.set(base64Data, url);
+        return url;
+    } catch(e) {
+        return base64Data;
+    }
+}
+
 // ============================================
-// CERTIFICATES DATABASE (Updated with Multiple Images)
+// CERTIFICATES DATABASE
 // ============================================
 const defaultCertificates = [
     {
@@ -240,10 +264,11 @@ function renderProjects() {
         ).join('');
         
         const dateStr = proj.dateObtained ? new Date(proj.dateObtained).toLocaleDateString('id-ID', { year: 'numeric', month: 'short' }) : '';
+        const optimizedImg = proj.image ? getBlobUrl(proj.image) : '';
         
         grid.innerHTML += `
-            <div class="project-card bg-chrome-silver/5 border border-chrome-silver/20 rounded-lg p-6 hover:border-chrome-silver/50 transition-all duration-300">
-                ${proj.image ? `<img src="${proj.image}" loading="lazy" class="w-full h-48 object-cover rounded mb-4">` : ''}
+            <div class="project-card bg-chrome-silver/5 border border-chrome-silver/20 rounded-lg p-6 hover:border-chrome-silver/50 transition-all duration-300" style="will-change: transform; transform: translateZ(0); backface-visibility: hidden;">
+                ${optimizedImg ? `<img src="${optimizedImg}" loading="lazy" class="w-full h-48 object-cover rounded mb-4" style="will-change: transform; transform: translateZ(0);">` : ''}
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex-1">
                         ${dateStr ? `<p class="text-xs text-chrome-silver/50 mb-1 font-montserrat tracking-wider">${dateStr}</p>` : ''}
@@ -535,32 +560,48 @@ document.addEventListener('DOMContentLoaded', async function () {
 function initNavbar() {
     const navbar = document.getElementById('navbar');
     const navLinks = document.querySelectorAll('.nav-link');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    window.addEventListener('scroll', function () {
-        if (window.scrollY > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-
     const sections = document.querySelectorAll('section[id]');
+    let isTicking = false;
+
+    // Fast scroll event for navbar background using requestAnimationFrame
     window.addEventListener('scroll', function () {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.pageYOffset >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').substring(1) === current) {
-                link.classList.add('active');
-            }
-        });
-    });
+        if (!isTicking) {
+            window.requestAnimationFrame(() => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                isTicking = false;
+            });
+            isTicking = true;
+        }
+    }, { passive: true }); // passive flag for smooth scrolling
+
+    // High performance section tracking using IntersectionObserver
+    if ('IntersectionObserver' in window) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -80% 0px',
+            threshold: 0
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const currentId = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === currentId) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    }
 }
 
 // ============================================
@@ -775,11 +816,13 @@ function updateCertCarouselDisplay() {
     certImage.style.opacity = 0;
 
     setTimeout(() => {
-        certImage.src = currentCertImageList[currentCertIndex];
+        // Use Blob URL to eliminate decoding lag
+        const srcUrl = getBlobUrl(currentCertImageList[currentCertIndex]);
+        certImage.src = srcUrl;
 
         certImage.onclick = (e) => {
             e.stopPropagation();
-            openLightbox(currentCertImageList[currentCertIndex], currentCertImageList);
+            openLightbox(srcUrl, currentCertImageList.map(img => getBlobUrl(img)));
         };
 
         setTimeout(() => {
@@ -814,8 +857,8 @@ function updateCarouselDisplay() {
     evidenceImage.classList.add('fade-out');
 
     setTimeout(() => {
-        // Change image source
-        evidenceImage.src = cert.evidenceImages[currentCarouselIndex];
+        // Change image source efficiently via Blob
+        evidenceImage.src = getBlobUrl(cert.evidenceImages[currentCarouselIndex]);
 
         // Small delay before fade in
         setTimeout(() => {
@@ -873,13 +916,20 @@ function openCertificateModal(certId) {
     const certImage = document.getElementById('modal-cert-image');
 
     // Handle case where certImage is an array
-    const certImageSrc = Array.isArray(cert.certImage) ? cert.certImage[0] : cert.certImage;
+    const certImageSrcRaw = Array.isArray(cert.certImage) ? cert.certImage[0] : cert.certImage;
     const certImageList = Array.isArray(cert.certImage) ? cert.certImage : [cert.certImage];
+    
+    // Fast Blob Conversion
+    const certImageSrc = getBlobUrl(certImageSrcRaw);
 
     currentCertIndex = 0;
     currentCertImageList = certImageList;
 
     certImage.src = certImageSrc;
+    // Hardware acceleration for the modal image container
+    certImage.style.willChange = 'transform, opacity';
+    certImage.style.transform = 'translateZ(0)';
+    certImage.style.backfaceVisibility = 'hidden';
     certImage.style.opacity = 1;
     certImage.onerror = () => certImage.src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400"%3E%3Crect fill="%231A1A1A"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23C0C0C0" font-size="14"%3E${cert.title}%3C/text%3E%3C/svg%3E`;
 
@@ -887,7 +937,7 @@ function openCertificateModal(certId) {
     certImage.style.cursor = 'zoom-in';
     certImage.onclick = (e) => {
         e.stopPropagation();
-        openLightbox(certImageSrc, certImageList);
+        openLightbox(certImageSrc, certImageList.map(img => getBlobUrl(img)));
     };
 
     // Main Certificate Navigation & Indicators UI update
@@ -1032,7 +1082,15 @@ function openCertificateModal(certId) {
         evidenceImage.style.display = 'block';
 
         const evidenceImages = cert.evidenceImages || [cert.certImage];
-        evidenceImage.src = evidenceImages[0];
+        // Initial setup for evidence
+        evidenceImage.src = getBlobUrl(evidenceImages[0]);
+        evidenceImage.style.willChange = 'transform, opacity';
+        evidenceImage.style.transform = 'translateZ(0)';
+        
+        evidenceImage.onclick = (e) => {
+            e.stopPropagation();
+            openLightbox(getBlobUrl(evidenceImages[currentCarouselIndex]), evidenceImages.map(img => getBlobUrl(img)));
+        };
         evidenceImage.onerror = () => evidenceImage.src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400"%3E%3Crect fill="%231A1A"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23C0C0C0" font-size="12"%3EEvidence Image%3C/text%3E%3C/svg%3E`;
 
         // Attach lightbox to evidence image with full list
