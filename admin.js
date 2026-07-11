@@ -35,17 +35,58 @@ function switchTab(tab) {
     renderTable(tab);
 }
 
-function getDB(type) {
-    return JSON.parse(localStorage.getItem('db_' + type) || '[]');
+const DB_NAME = 'mzr_portfolio_db';
+const STORE_NAME = 'collections';
+
+function getLocalDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+            e.target.result.createObjectStore(STORE_NAME);
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+    });
 }
 
-function saveDB(type, data) {
-    localStorage.setItem('db_' + type, JSON.stringify(data));
-    renderTable(type);
+async function getVal(key) {
+    try {
+        const db = await getLocalDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readonly');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.get(key);
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    } catch (e) {
+        return null;
+    }
 }
 
-function renderTable(type) {
-    const data = getDB(type);
+async function setVal(key, val) {
+    const db = await getLocalDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.put(val, key);
+        req.onsuccess = () => resolve();
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function getDB(type) {
+    const data = await getVal('db_' + type);
+    return data || [];
+}
+
+async function saveDB(type, data) {
+    await setVal('db_' + type, data);
+    await renderTable(type);
+}
+
+async function renderTable(type) {
+    const data = await getDB(type);
     const tbody = document.getElementById(type + '-table-body');
     tbody.innerHTML = '';
     
@@ -126,7 +167,7 @@ function generateFormFields(type, data = null) {
     }
 }
 
-function openModal(type, id = null) {
+async function openModal(type, id = null) {
     document.getElementById('crud-modal').classList.remove('hidden');
     document.getElementById('crud-modal').classList.add('flex');
     const tableType = type + 's';
@@ -134,7 +175,8 @@ function openModal(type, id = null) {
     
     if (id) {
         document.getElementById('modal-title').innerText = 'Edit ' + type;
-        const data = getDB(tableType).find(i => i.id === id);
+        const dbData = await getDB(tableType);
+        const data = dbData.find(i => i.id === id);
         document.getElementById('item-id').value = data.id;
         generateFormFields(tableType, data);
     } else {
@@ -163,7 +205,7 @@ async function saveData(e) {
     e.preventDefault();
     const type = document.getElementById('item-type').value;
     const id = document.getElementById('item-id').value;
-    let data = getDB(type);
+    let data = await getDB(type);
     
     let item = {
         id: id ? parseInt(id) : Date.now()
@@ -206,15 +248,15 @@ async function saveData(e) {
     } else {
         data.push(item);
     }
-    saveDB(type, data);
+    await saveDB(type, data);
     closeModal();
 }
 
-function deleteItem(type, id) {
+async function deleteItem(type, id) {
     if (confirm('Anda yakin ingin menghapus item ini?')) {
-        let data = getDB(type);
+        let data = await getDB(type);
         data = data.filter(i => i.id !== id);
-        saveDB(type, data);
+        await saveDB(type, data);
     }
 }
 

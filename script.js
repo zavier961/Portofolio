@@ -147,43 +147,69 @@ const defaultCertificates = [
 ];
 
 let certificatesData = [];
-try {
-    const localCerts = JSON.parse(localStorage.getItem('db_certificates'));
+let projectsData = [];
+
+// ============================================
+// INDEXED DB (LOCAL STORAGE) WRAPPER (Gigabyte limit)
+// ============================================
+const DB_NAME = 'mzr_portfolio_db';
+const STORE_NAME = 'collections';
+
+function getLocalDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+            e.target.result.createObjectStore(STORE_NAME);
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+async function getVal(key) {
+    try {
+        const db = await getLocalDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readonly');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.get(key);
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    } catch (e) {
+        return null;
+    }
+}
+
+async function setVal(key, val) {
+    const db = await getLocalDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.put(val, key);
+        req.onsuccess = () => resolve();
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function loadLocalDatabase() {
+    // Load Certificates
+    const localCerts = await getVal('db_certificates');
     if (localCerts && localCerts.length > 0) {
         certificatesData = localCerts;
     } else {
         certificatesData = defaultCertificates;
-        localStorage.setItem('db_certificates', JSON.stringify(certificatesData));
+        await setVal('db_certificates', certificatesData);
     }
-} catch(e) {
-    certificatesData = defaultCertificates;
-}
 
-// ============================================
-// PROJECTS DATABASE
-// ============================================
-const defaultProjects = [
-    {
-        id: 1,
-        title: "Project Title",
-        category: "Category / Technology",
-        desc: "Brief description of your project goes here. Highlight the key challenges, solutions, and technologies used.",
-        tags: "Tag 1, Tag 2, Tag 3",
-        image: ""
-    }
-];
-
-let projectsData = [];
-try {
-    const localProj = JSON.parse(localStorage.getItem('db_projects'));
+    // Load Projects
+    const localProj = await getVal('db_projects');
     if (localProj && localProj.length > 0) {
         projectsData = localProj;
     } else {
         projectsData = defaultProjects;
-        localStorage.setItem('db_projects', JSON.stringify(projectsData));
+        await setVal('db_projects', projectsData);
     }
-} catch(e) {
-    projectsData = defaultProjects;
 }
 
 function renderProjects() {
@@ -400,8 +426,11 @@ function attachLightboxToImage(img, imageList = []) {
 // ============================================
 // INITIALIZATION
 // ============================================
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     console.log('%c⚙️ Interactive Workshop Portfolio Loaded', 'color: #C0C0C0; font-size: 16px; font-weight: bold;');
+    
+    // LOAD LOCAL DATABASE FIRST
+    await loadLocalDatabase();
 
     // Mobile Menu Toggle - IMPROVED
     const mobileToggle = document.getElementById('mobile-toggle');
