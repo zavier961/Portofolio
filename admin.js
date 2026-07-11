@@ -109,14 +109,17 @@ async function renderTable(type) {
     });
 }
 
+// Global state for unlimited image uploads in the modal
+let currentModalImages = {};
+
 function generateFormFields(type, data = null) {
     const fieldsContainer = document.getElementById('form-fields');
     fieldsContainer.innerHTML = '';
     
-    const createInput = (id, label, type='text', isRequired=false, defaultValue='') => {
+    const createInput = (id, label, inputType='text', isRequired=false, defaultValue='') => {
         const value = data ? (data[id] !== undefined ? data[id] : defaultValue) : defaultValue;
         
-        if (type === 'textarea') {
+        if (inputType === 'textarea') {
             return `
                 <div>
                     <label class="block text-sm font-medium mb-1">${label}</label>
@@ -124,17 +127,17 @@ function generateFormFields(type, data = null) {
                 </div>
             `;
         }
-        if (type === 'file' || type === 'file-multiple') {
-            const isMultiple = type === 'file-multiple';
-            const valString = Array.isArray(value) ? JSON.stringify(value) : (value ? JSON.stringify([value]) : '[]');
-            const countText = Array.isArray(value) ? value.length : (value ? 1 : 0);
+        if (inputType === 'file' || inputType === 'file-multiple') {
+            const isMultiple = inputType === 'file-multiple';
             
             return `
                 <div>
                     <label class="block text-sm font-medium mb-1">${label}</label>
-                    <input type="file" id="item-${id}" accept="image/*" class="w-full p-2 border rounded focus:border-blue-500 focus:outline-none" ${isMultiple ? 'multiple' : ''}>
-                    ${countText > 0 ? `<p class="text-xs text-green-600 mt-1">${countText} image(s) currently saved. Uploading new will replace them.</p>` : ''}
-                    <input type="hidden" id="item-${id}-hidden" value='${valString}'>
+                    <div class="flex gap-2 mb-2">
+                        <input type="file" id="item-${id}" accept="image/*" class="w-full p-2 border rounded focus:border-blue-500 focus:outline-none bg-gray-50" ${isMultiple ? 'multiple' : ''} onchange="handleImageUpload(this, '${id}')">
+                    </div>
+                    <p class="text-xs text-blue-600 mb-2">Pilih file untuk menambah foto. Anda bisa menambah foto sebanyak apapun tanpa batasan.</p>
+                    <div id="gallery-${id}" class="flex flex-wrap gap-3 mt-2"></div>
                 </div>
             `;
         }
@@ -179,23 +182,75 @@ function generateFormFields(type, data = null) {
     }
 }
 
+async function handleImageUpload(input, id) {
+    if (!input.files || input.files.length === 0) return;
+    
+    const b64s = await getMultipleBase64(input.files);
+    
+    // Add to global state
+    if (!currentModalImages[id]) currentModalImages[id] = [];
+    currentModalImages[id] = [...currentModalImages[id], ...b64s];
+    
+    // Clear input so they can upload the same file again if they want
+    input.value = '';
+    
+    // Update gallery UI
+    renderGallery(id);
+}
+
+function removeGalleryImage(id, index) {
+    currentModalImages[id].splice(index, 1);
+    renderGallery(id);
+}
+
+function renderGallery(id) {
+    const gallery = document.getElementById('gallery-' + id);
+    if (!gallery) return;
+    gallery.innerHTML = '';
+    
+    const images = currentModalImages[id] || [];
+    images.forEach((img, index) => {
+        gallery.innerHTML += `
+            <div class="relative w-20 h-20 border rounded shadow-sm bg-gray-100 overflow-hidden group">
+                <img src="${img}" class="w-full h-full object-cover">
+                <button type="button" onclick="removeGalleryImage('${id}', ${index})" class="absolute inset-0 bg-red-600/80 text-white font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200">X</button>
+            </div>
+        `;
+    });
+}
+
 async function openModal(type, id = null) {
     document.getElementById('crud-modal').classList.remove('hidden');
     document.getElementById('crud-modal').classList.add('flex');
     const tableType = type + 's';
     document.getElementById('item-type').value = tableType;
     
+    // Reset global state
+    currentModalImages = {};
+
     if (id) {
         document.getElementById('modal-title').innerText = 'Edit ' + type;
         const dbData = await getDB(tableType);
         const data = dbData.find(i => i.id === id);
         document.getElementById('item-id').value = data.id;
+        
+        // Initialize images into global state
+        if (tableType === 'certificates') {
+            currentModalImages['certImage'] = Array.isArray(data.certImage) ? [...data.certImage] : (data.certImage ? [data.certImage] : []);
+            currentModalImages['evidenceImages'] = Array.isArray(data.evidenceImages) ? [...data.evidenceImages] : (data.evidenceImages ? [data.evidenceImages] : []);
+        } else {
+            currentModalImages['image'] = data.image ? [data.image] : [];
+        }
+
         generateFormFields(tableType, data);
     } else {
         document.getElementById('modal-title').innerText = 'Add New ' + type;
         document.getElementById('item-id').value = '';
         generateFormFields(tableType, null);
     }
+    
+    // Render galleries after fields are injected
+    Object.keys(currentModalImages).forEach(key => renderGallery(key));
 }
 
 function closeModal() {
@@ -233,12 +288,8 @@ async function saveData(e) {
         item.desc = document.getElementById('item-desc').value;
         item.tags = document.getElementById('item-tags').value;
         
-        const fileInput = document.getElementById('item-image');
-        if (fileInput.files.length > 0) {
-            item.image = await getBase64(fileInput.files[0]);
-        } else if (!id) {
-            item.image = "";
-        }
+        const imgs = currentModalImages['image'] || [];
+        item.image = imgs.length > 0 ? imgs[0] : "";
     } else if (type === 'certificates') {
         item.title = document.getElementById('item-title').value;
         item.category = document.getElementById('item-category').value;
@@ -251,24 +302,12 @@ async function saveData(e) {
         item.pdfLink = document.getElementById('item-pdfLink').value;
         item.videoEmbed = document.getElementById('item-videoEmbed').value;
         
-        // Handle Cert Image(s)
-        const certInput = document.getElementById('item-certImage');
-        if (certInput.files.length > 0) {
-            const b64s = await getMultipleBase64(certInput.files);
-            item.certImage = b64s.length === 1 ? b64s[0] : b64s;
-        } else {
-            const hiddenVal = document.getElementById('item-certImage-hidden').value;
-            const parsed = JSON.parse(hiddenVal || '[]');
-            item.certImage = parsed.length === 1 ? parsed[0] : parsed;
-        }
+        // Handle Cert Image(s) from global state
+        const certs = currentModalImages['certImage'] || [];
+        item.certImage = certs.length === 1 ? certs[0] : certs;
 
-        // Handle Evidence Images
-        const evidenceInput = document.getElementById('item-evidenceImages');
-        if (evidenceInput.files.length > 0) {
-            item.evidenceImages = await getMultipleBase64(evidenceInput.files);
-        } else {
-            item.evidenceImages = JSON.parse(document.getElementById('item-evidenceImages-hidden').value || '[]');
-        }
+        // Handle Evidence Images from global state
+        item.evidenceImages = currentModalImages['evidenceImages'] || [];
     }
 
     if (id) {
