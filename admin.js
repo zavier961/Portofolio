@@ -114,7 +114,8 @@ function generateFormFields(type, data = null) {
     fieldsContainer.innerHTML = '';
     
     const createInput = (id, label, type='text', isRequired=false, defaultValue='') => {
-        const value = data ? (data[id] || '') : defaultValue;
+        const value = data ? (data[id] !== undefined ? data[id] : defaultValue) : defaultValue;
+        
         if (type === 'textarea') {
             return `
                 <div>
@@ -123,13 +124,17 @@ function generateFormFields(type, data = null) {
                 </div>
             `;
         }
-        if (type === 'file') {
+        if (type === 'file' || type === 'file-multiple') {
+            const isMultiple = type === 'file-multiple';
+            const valString = Array.isArray(value) ? JSON.stringify(value) : (value ? JSON.stringify([value]) : '[]');
+            const countText = Array.isArray(value) ? value.length : (value ? 1 : 0);
+            
             return `
                 <div>
                     <label class="block text-sm font-medium mb-1">${label}</label>
-                    <input type="file" id="item-${id}" accept="image/*" class="w-full p-2 border rounded focus:border-blue-500 focus:outline-none">
-                    ${value ? `<p class="text-xs text-green-600 mt-1">Image loaded (Uploading new will replace it)</p>` : ''}
-                    <input type="hidden" id="item-${id}-hidden" value='${value}'>
+                    <input type="file" id="item-${id}" accept="image/*" class="w-full p-2 border rounded focus:border-blue-500 focus:outline-none" ${isMultiple ? 'multiple' : ''}>
+                    ${countText > 0 ? `<p class="text-xs text-green-600 mt-1">${countText} image(s) currently saved. Uploading new will replace them.</p>` : ''}
+                    <input type="hidden" id="item-${id}-hidden" value='${valString}'>
                 </div>
             `;
         }
@@ -157,12 +162,19 @@ function generateFormFields(type, data = null) {
                 ${createInput('badge', 'Badge Name')}
             </div>
             ${createInput('description', 'Short Description', 'textarea')}
-            ${createInput('certImage', 'Certificate Image', 'file', false)}
+            
+            <div class="p-4 bg-blue-50 rounded border border-blue-100 my-2 space-y-4">
+                <h4 class="font-bold text-blue-800 text-sm">Media & Documentation</h4>
+                ${createInput('certImage', 'Main Certificate Image(s)', 'file-multiple')}
+                ${createInput('evidenceImages', 'Documentation/Evidence Photos', 'file-multiple')}
+                ${createInput('videoEmbed', 'YouTube Embed Link (Optional)')}
+            </div>
+
             ${createInput('theoryText', 'Theory Text', 'textarea')}
             ${createInput('toolText', 'Tools Used', 'textarea')}
             ${createInput('story', 'Story / Journey', 'textarea')}
-            ${createInput('documentation', 'Documentation Detail', 'textarea')}
-            ${createInput('pdfLink', 'PDF Document URL (Optional)', 'text')}
+            ${createInput('documentation', 'Documentation Text Detail', 'textarea')}
+            ${createInput('pdfLink', 'PDF Document URL or Name', 'text')}
         `;
     }
 }
@@ -201,15 +213,19 @@ function getBase64(file) {
     });
 }
 
+async function getMultipleBase64(files) {
+    const promises = Array.from(files).map(file => getBase64(file));
+    return Promise.all(promises);
+}
+
 async function saveData(e) {
     e.preventDefault();
     const type = document.getElementById('item-type').value;
     const id = document.getElementById('item-id').value;
     let data = await getDB(type);
     
-    let item = {
-        id: id ? parseInt(id) : Date.now()
-    };
+    // Preserve old item fully if editing, so we don't lose fields not in form
+    let item = id ? { ...data.find(i => i.id === parseInt(id)) } : { id: Date.now() };
 
     if (type === 'projects') {
         item.title = document.getElementById('item-title').value;
@@ -220,8 +236,8 @@ async function saveData(e) {
         const fileInput = document.getElementById('item-image');
         if (fileInput.files.length > 0) {
             item.image = await getBase64(fileInput.files[0]);
-        } else {
-            item.image = document.getElementById('item-image-hidden').value;
+        } else if (!id) {
+            item.image = "";
         }
     } else if (type === 'certificates') {
         item.title = document.getElementById('item-title').value;
@@ -233,12 +249,25 @@ async function saveData(e) {
         item.story = document.getElementById('item-story').value;
         item.documentation = document.getElementById('item-documentation').value;
         item.pdfLink = document.getElementById('item-pdfLink').value;
+        item.videoEmbed = document.getElementById('item-videoEmbed').value;
         
-        const fileInput = document.getElementById('item-certImage');
-        if (fileInput.files.length > 0) {
-            item.certImage = await getBase64(fileInput.files[0]);
+        // Handle Cert Image(s)
+        const certInput = document.getElementById('item-certImage');
+        if (certInput.files.length > 0) {
+            const b64s = await getMultipleBase64(certInput.files);
+            item.certImage = b64s.length === 1 ? b64s[0] : b64s;
         } else {
-            item.certImage = document.getElementById('item-certImage-hidden').value;
+            const hiddenVal = document.getElementById('item-certImage-hidden').value;
+            const parsed = JSON.parse(hiddenVal || '[]');
+            item.certImage = parsed.length === 1 ? parsed[0] : parsed;
+        }
+
+        // Handle Evidence Images
+        const evidenceInput = document.getElementById('item-evidenceImages');
+        if (evidenceInput.files.length > 0) {
+            item.evidenceImages = await getMultipleBase64(evidenceInput.files);
+        } else {
+            item.evidenceImages = JSON.parse(document.getElementById('item-evidenceImages-hidden').value || '[]');
         }
     }
 
