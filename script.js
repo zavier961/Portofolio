@@ -32,7 +32,7 @@ let modalHistoryState = null;
 // ============================================
 // CERTIFICATES DATABASE (Updated with Multiple Images)
 // ============================================
-const certificatesData = [
+const defaultCertificates = [
     {
         id: 1,
         title: "4th Runner Up - Scientific Paper FUSE 2025 (Polman Bandung)",
@@ -145,6 +145,75 @@ const certificatesData = [
         documentation: "Detail Proyek: Sistem keamanan hutan berbasis IoT & AI. Mekanisme: Perangkat mendeteksi anomali suara/visual -> Klasifikasi lokal dengan TinyML -> Transmisi peringatan via LoRa ke pos pusat. Keunggulan: Konsumsi daya sangat rendah, jangkauan transmisi hingga beberapa kilometer, dan mampu beroperasi secara otonom. Tim: Muhammad Zavier Rizkayanto, Azahid Pramudya Al Ghifahri, Sendy Yasho. Pembimbing: Mochammad Aldi Mauludin."
     }
 ];
+
+let certificatesData = [];
+try {
+    const localCerts = JSON.parse(localStorage.getItem('db_certificates'));
+    if (localCerts && localCerts.length > 0) {
+        certificatesData = localCerts;
+    } else {
+        certificatesData = defaultCertificates;
+        localStorage.setItem('db_certificates', JSON.stringify(certificatesData));
+    }
+} catch(e) {
+    certificatesData = defaultCertificates;
+}
+
+// ============================================
+// PROJECTS DATABASE
+// ============================================
+const defaultProjects = [
+    {
+        id: 1,
+        title: "Project Title",
+        category: "Category / Technology",
+        desc: "Brief description of your project goes here. Highlight the key challenges, solutions, and technologies used.",
+        tags: "Tag 1, Tag 2, Tag 3",
+        image: ""
+    }
+];
+
+let projectsData = [];
+try {
+    const localProj = JSON.parse(localStorage.getItem('db_projects'));
+    if (localProj && localProj.length > 0) {
+        projectsData = localProj;
+    } else {
+        projectsData = defaultProjects;
+        localStorage.setItem('db_projects', JSON.stringify(projectsData));
+    }
+} catch(e) {
+    projectsData = defaultProjects;
+}
+
+function renderProjects() {
+    const grid = document.getElementById('projects-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    projectsData.forEach(proj => {
+        const tagHTML = (proj.tags || '').split(',').map(tag => tag.trim()).filter(tag => tag).map(tag => 
+            `<span class="bg-chrome-silver/10 text-chrome-silver/80 text-xs px-3 py-1 rounded">${tag}</span>`
+        ).join('');
+        
+        grid.innerHTML += `
+            <div class="project-card bg-chrome-silver/5 border border-chrome-silver/20 rounded-lg p-6 hover:border-chrome-silver/50 transition-all duration-300">
+                ${proj.image ? `<img src="${proj.image}" class="w-full h-48 object-cover rounded mb-4">` : ''}
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-montserrat font-bold text-chrome-silver mb-2">${proj.title}</h3>
+                        <p class="text-chrome-silver/60 text-sm">${proj.category}</p>
+                    </div>
+                </div>
+                <p class="text-chrome-silver/70 text-sm mb-4">${proj.desc}</p>
+                <div class="flex flex-wrap gap-2 mb-4">${tagHTML}</div>
+                <div class="flex gap-3">
+                    <a href="#" class="text-chrome-silver/60 hover:text-chrome-silver text-sm transition">View Details →</a>
+                </div>
+            </div>
+        `;
+    });
+}
 
 // ============================================
 // FILE HANDLER - Open or Download Files
@@ -399,6 +468,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initHistoryAPI();
     initLightbox();
     renderCertificates(currentFilter);
+    renderProjects();
 
     // Attach lightbox to documentation images after render
     setTimeout(() => {
