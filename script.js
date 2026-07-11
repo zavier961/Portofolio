@@ -231,16 +231,22 @@ function renderProjects() {
     if (!grid) return;
     grid.innerHTML = '';
     
-    projectsData.forEach(proj => {
+    // Sort projects by date (newest first)
+    const sortedProjects = [...projectsData].sort((a, b) => new Date(b.dateObtained || '2000-01-01') - new Date(a.dateObtained || '2000-01-01'));
+    
+    sortedProjects.forEach(proj => {
         const tagHTML = (proj.tags || '').split(',').map(tag => tag.trim()).filter(tag => tag).map(tag => 
             `<span class="bg-chrome-silver/10 text-chrome-silver/80 text-xs px-3 py-1 rounded">${tag}</span>`
         ).join('');
         
+        const dateStr = proj.dateObtained ? new Date(proj.dateObtained).toLocaleDateString('id-ID', { year: 'numeric', month: 'short' }) : '';
+        
         grid.innerHTML += `
             <div class="project-card bg-chrome-silver/5 border border-chrome-silver/20 rounded-lg p-6 hover:border-chrome-silver/50 transition-all duration-300">
-                ${proj.image ? `<img src="${proj.image}" class="w-full h-48 object-cover rounded mb-4">` : ''}
+                ${proj.image ? `<img src="${proj.image}" loading="lazy" class="w-full h-48 object-cover rounded mb-4">` : ''}
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex-1">
+                        ${dateStr ? `<p class="text-xs text-chrome-silver/50 mb-1 font-montserrat tracking-wider">${dateStr}</p>` : ''}
                         <h3 class="text-xl font-montserrat font-bold text-chrome-silver mb-2">${proj.title}</h3>
                         <p class="text-chrome-silver/60 text-sm">${proj.category}</p>
                     </div>
@@ -595,12 +601,17 @@ function initFilterSystem() {
 
 function renderCertificates(filter) {
     const grid = document.getElementById('certificates-grid');
+    if (!grid) return;
     const existingCards = grid.querySelectorAll('.certificate-card');
     existingCards.forEach(card => card.classList.add('fade-out'));
 
     setTimeout(() => {
         grid.innerHTML = '';
-        const filtered = filter === 'all' ? certificatesData : certificatesData.filter(cert => cert.category === filter);
+        let filtered = filter === 'all' ? certificatesData : certificatesData.filter(cert => cert.category === filter);
+        
+        // Sort by date (newest first)
+        filtered.sort((a, b) => new Date(b.dateObtained || '2000-01-01') - new Date(a.dateObtained || '2000-01-01'));
+        
         filtered.forEach((cert, index) => {
             const card = createCertificateCard(cert);
             grid.appendChild(card);
@@ -618,9 +629,13 @@ function createCertificateCard(cert) {
     card.setAttribute('data-id', cert.id);
     card.setAttribute('role', 'button');
     card.setAttribute('tabindex', '0');
+    
+    const dateStr = cert.dateObtained ? new Date(cert.dateObtained).toLocaleDateString('id-ID', { year: 'numeric', month: 'short' }) : '';
+    
     card.innerHTML = `
         <div class="certificate-badge">${cert.badge}</div>
-        <h3 class="certificate-title">${cert.title}</h3>
+        ${dateStr ? `<p class="text-xs text-chrome-silver/50 mb-1 mt-4 font-montserrat tracking-wider">${dateStr}</p>` : ''}
+        <h3 class="certificate-title ${dateStr ? 'mt-1' : ''}">${cert.title}</h3>
         <p class="certificate-desc">${cert.description}</p>
     `;
     card.addEventListener('click', () => openCertificateModal(cert.id));

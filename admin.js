@@ -127,24 +127,37 @@ function generateFormFields(type, data = null) {
                 </div>
             `;
         }
-        if (inputType === 'file' || inputType === 'file-multiple') {
+        if (inputType === 'file' || inputType === 'file-multiple' || inputType === 'file-pdf') {
             const isMultiple = inputType === 'file-multiple';
+            const acceptType = inputType === 'file-pdf' ? '.pdf' : 'image/*';
+            const isGallery = inputType !== 'file-pdf' && inputType !== 'file';
             
-            return `
-                <div>
-                    <label class="block text-sm font-medium mb-1">${label}</label>
-                    <div class="flex gap-2 mb-2">
-                        <input type="file" id="item-${id}" accept="image/*" class="w-full p-2 border rounded focus:border-blue-500 focus:outline-none bg-gray-50" ${isMultiple ? 'multiple' : ''} onchange="handleImageUpload(this, '${id}')">
+            if (isGallery) {
+                return `
+                    <div>
+                        <label class="block text-sm font-medium mb-1">${label}</label>
+                        <div class="flex gap-2 mb-2">
+                            <input type="file" id="item-${id}" accept="${acceptType}" class="w-full p-2 border rounded focus:border-blue-500 focus:outline-none bg-gray-50" ${isMultiple ? 'multiple' : ''} onchange="handleImageUpload(this, '${id}')">
+                        </div>
+                        <p class="text-xs text-blue-600 mb-2">Pilih file untuk menambah foto. Anda bisa menambah foto sebanyak apapun tanpa batasan.</p>
+                        <div id="gallery-${id}" class="flex flex-wrap gap-3 mt-2"></div>
                     </div>
-                    <p class="text-xs text-blue-600 mb-2">Pilih file untuk menambah foto. Anda bisa menambah foto sebanyak apapun tanpa batasan.</p>
-                    <div id="gallery-${id}" class="flex flex-wrap gap-3 mt-2"></div>
-                </div>
-            `;
+                `;
+            } else {
+                return `
+                    <div>
+                        <label class="block text-sm font-medium mb-1">${label}</label>
+                        <input type="file" id="item-${id}" accept="${acceptType}" class="w-full p-2 border rounded focus:border-blue-500 focus:outline-none bg-gray-50">
+                        ${value ? `<p class="text-xs text-green-600 mt-1">File saat ini sudah tersimpan. Upload baru untuk mengganti.</p>` : ''}
+                        <input type="hidden" id="item-${id}-hidden" value="${value}">
+                    </div>
+                `;
+            }
         }
         return `
             <div>
                 <label class="block text-sm font-medium mb-1">${label}</label>
-                <input type="text" id="item-${id}" value="${value}" class="w-full p-2.5 border rounded focus:border-blue-500 focus:outline-none" ${isRequired?'required':''}>
+                <input type="${inputType}" id="item-${id}" value="${value}" class="w-full p-2.5 border rounded focus:border-blue-500 focus:outline-none" ${isRequired?'required':''}>
             </div>
         `;
     };
@@ -155,6 +168,7 @@ function generateFormFields(type, data = null) {
             ${createInput('category', 'Category')}
             ${createInput('desc', 'Description', 'textarea', true)}
             ${createInput('tags', 'Tags (comma separated)')}
+            ${createInput('dateObtained', 'Tanggal Selesai / Dibuat', 'date', true)}
             ${createInput('image', 'Project Photo', 'file')}
         `;
     } else if (type === 'certificates') {
@@ -164,6 +178,7 @@ function generateFormFields(type, data = null) {
                 ${createInput('category', 'Filter Category (e.g., robotics, science)')}
                 ${createInput('badge', 'Badge Name')}
             </div>
+            ${createInput('dateObtained', 'Tanggal Sertifikat / Menang', 'date', true)}
             ${createInput('description', 'Short Description', 'textarea')}
             
             <div class="p-4 bg-blue-50 rounded border border-blue-100 my-2 space-y-4">
@@ -171,13 +186,13 @@ function generateFormFields(type, data = null) {
                 ${createInput('certImage', 'Main Certificate Image(s)', 'file-multiple')}
                 ${createInput('evidenceImages', 'Documentation/Evidence Photos', 'file-multiple')}
                 ${createInput('videoEmbed', 'YouTube Embed Link (Optional)')}
+                ${createInput('pdfLink', 'Upload File PDF (Opsional)', 'file-pdf')}
             </div>
 
             ${createInput('theoryText', 'Theory Text', 'textarea')}
             ${createInput('toolText', 'Tools Used', 'textarea')}
             ${createInput('story', 'Story / Journey', 'textarea')}
             ${createInput('documentation', 'Documentation Text Detail', 'textarea')}
-            ${createInput('pdfLink', 'PDF Document URL or Name', 'text')}
         `;
     }
 }
@@ -287,21 +302,35 @@ async function saveData(e) {
         item.category = document.getElementById('item-category').value;
         item.desc = document.getElementById('item-desc').value;
         item.tags = document.getElementById('item-tags').value;
+        item.dateObtained = document.getElementById('item-dateObtained').value;
         
-        const imgs = currentModalImages['image'] || [];
-        item.image = imgs.length > 0 ? imgs[0] : "";
+        const fileInput = document.getElementById('item-image');
+        if (fileInput.files.length > 0) {
+            item.image = await getBase64(fileInput.files[0]);
+        } else if (!id) {
+            item.image = "";
+        } else {
+            item.image = document.getElementById('item-image-hidden').value;
+        }
     } else if (type === 'certificates') {
         item.title = document.getElementById('item-title').value;
         item.category = document.getElementById('item-category').value;
         item.badge = document.getElementById('item-badge').value;
+        item.dateObtained = document.getElementById('item-dateObtained').value;
         item.description = document.getElementById('item-description').value;
         item.theoryText = document.getElementById('item-theoryText').value;
         item.toolText = document.getElementById('item-toolText').value;
         item.story = document.getElementById('item-story').value;
         item.documentation = document.getElementById('item-documentation').value;
-        item.pdfLink = document.getElementById('item-pdfLink').value;
         item.videoEmbed = document.getElementById('item-videoEmbed').value;
         
+        const pdfInput = document.getElementById('item-pdfLink');
+        if (pdfInput.files.length > 0) {
+            item.pdfLink = await getBase64(pdfInput.files[0]);
+        } else {
+            item.pdfLink = document.getElementById('item-pdfLink-hidden').value;
+        }
+
         // Handle Cert Image(s) from global state
         const certs = currentModalImages['certImage'] || [];
         item.certImage = certs.length === 1 ? certs[0] : certs;
