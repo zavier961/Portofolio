@@ -292,3 +292,22 @@ async function deleteItem(type, id) {
 function editItem(type, id) {
     openModal(type.slice(0, -1), id);
 }
+
+async function resetDefaults() {
+    if (confirm('PERINGATAN: Apakah Anda yakin ingin MERESET SELURUH DATA kembali ke pengaturan pabrik? Semua Sertifikat dan Proyek yang Anda tambahkan sendiri akan hilang permanen!')) {
+        const db = await getLocalDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.clear();
+            req.onsuccess = () => {
+                alert('Database berhasil di-reset! Silakan kembali ke Web.');
+                window.location.reload();
+            };
+            req.onerror = () => {
+                alert('Gagal mereset database.');
+                reject(req.error);
+            };
+        });
+    }
+}
