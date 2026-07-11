@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://muhammadzavierrizkayanto.pages.dev/sitemap.xml
