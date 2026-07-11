@@ -1,0 +1,150 @@
+/* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 6px; height: 6px;
+    background: #00e5ff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
+}
+
+.custom-cursor-follower {
+    position: fixed;
+    top: 0; left: 0;
+    width: 30px; height: 30px;
+    border: 2px solid rgba(0, 229, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+}
+
+.custom-cursor-follower.hover {
+    width: 50px; height: 50px;
+    background: rgba(0, 229, 255, 0.1);
+    border-color: transparent;
+}
+
+/* Background Orbs */
+.bg-orbs-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.3;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 400px; height: 400px;
+    background: #00e5ff;
+    top: -100px; left: -100px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 500px; height: 500px;
+    background: #ff00ea;
+    bottom: -150px; right: -150px;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 300px; height: 300px;
+    background: #7000ff;
+    top: 30%; left: 40%;
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(60px, -60px) scale(1.1); }
+}
+
+/* Glassmorphism updates */
+.navbar-elite.scrolled {
+    background: rgba(10, 10, 15, 0.6) !important;
+    backdrop-filter: blur(25px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.workshop-card, .project-card, .stat-card {
+    background: rgba(25, 25, 30, 0.4) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.workshop-card:hover, .project-card:hover {
+    transform: translateY(-10px) !important;
+    border-color: rgba(0, 229, 255, 0.5) !important;
+    box-shadow: 0 15px 35px rgba(0, 229, 255, 0.15) !important;
+}
+
+/* Text Gradient */
+.text-gradient {
+    background: linear-gradient(90deg, #ffffff, #00e5ff, #ff00ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Scroll Reveal */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+.reveal-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Modernize Buttons */
+.btn-primary {
+    background: linear-gradient(90deg, #00e5ff, #0099ff) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 5px 15px rgba(0, 229, 255, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-primary:hover {
+    box-shadow: 0 8px 25px rgba(0, 229, 255, 0.6) !important;
+    transform: translateY(-3px) !important;
+}
+
+.btn-secondary {
+    border-color: #00e5ff !important;
+    color: #00e5ff !important;
+    transition: all 0.3s ease !important;
+}
+.btn-secondary:hover {
+    background: rgba(0, 229, 255, 0.1) !important;
+    box-shadow: 0 5px 15px rgba(0, 229, 255, 0.2) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Additional UI polishes */
+#main-site-wrapper {
+    position: relative;
+    z-index: 10;
+}
