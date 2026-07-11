@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <div id="login-section" class="flex h-screen items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-96 text-center border border-gray-200">
+            <h2 class="text-2xl font-bold mb-4">Admin Login</h2>
+            <input type="password" id="pin-input" placeholder="Enter PIN (1234)" class="w-full p-3 border rounded mb-4 text-center text-xl">
+            <button onclick="login()" class="w-full bg-blue-600 text-white font-bold py-3 rounded hover:bg-blue-700 transition">Login</button>
+        </div>
+    </div>
+
+    <div id="dashboard-section" class="hidden min-h-screen flex flex-col">
+        <header class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold">Admin Dashboard</h1>
+            <div class="flex gap-4">
+                <a href="index.html" class="bg-blue-700 px-4 py-2 rounded hover:bg-blue-800 text-sm">Kembali ke Web</a>
+                <button onclick="logout()" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-sm">Logout</button>
+            </div>
+        </header>
+        <div class="flex flex-1">
+            <aside class="w-64 bg-white shadow-md">
+                <nav class="flex flex-col p-4 gap-2">
+                    <button onclick="switchTab('projects')" class="text-left p-3 rounded hover:bg-blue-50 hover:text-blue-600 font-medium transition">Manage Projects</button>
+                    <button onclick="switchTab('certificates')" class="text-left p-3 rounded hover:bg-blue-50 hover:text-blue-600 font-medium transition">Manage Certificates</button>
+                </nav>
+            </aside>
+            <main class="flex-1 p-8 bg-gray-50">
+                <h2 id="page-title" class="text-2xl font-bold mb-6">Welcome</h2>
+                
+                <div id="view-projects" class="hidden">
+                    <button onclick="openModal('project')" class="bg-green-600 text-white px-4 py-2 rounded mb-4 hover:bg-green-700 font-medium">+ Add New Project</button>
+                    <div class="bg-white rounded-lg shadow border border-gray-100 overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-100">
+                                <tr class="border-b">
+                                    <th class="p-3">Title</th>
+                                    <th class="p-3">Category</th>
+                                    <th class="p-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projects-table-body" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-certificates" class="hidden">
+                    <button onclick="openModal('certificate')" class="bg-green-600 text-white px-4 py-2 rounded mb-4 hover:bg-green-700 font-medium">+ Add New Certificate</button>
+                    <div class="bg-white rounded-lg shadow border border-gray-100 overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-100">
+                                <tr class="border-b">
+                                    <th class="p-3">Title</th>
+                                    <th class="p-3">Category</th>
+                                    <th class="p-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="certificates-table-body" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="crud-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg w-[500px] shadow-2xl">
+            <h3 id="modal-title" class="text-xl font-bold mb-6">Add Item</h3>
+            <form id="crud-form" onsubmit="saveData(event)">
+                <input type="hidden" id="item-type">
+                <input type="hidden" id="item-id">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Title</label>
+                        <input type="text" id="item-title" class="w-full p-2.5 border rounded focus:border-blue-500 focus:outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Category</label>
+                        <input type="text" id="item-category" class="w-full p-2.5 border rounded focus:border-blue-500 focus:outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Description</label>
+                        <textarea id="item-desc" class="w-full p-2.5 border rounded focus:border-blue-500 focus:outline-none" rows="3"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Image URL</label>
+                        <input type="text" id="item-image" class="w-full p-2.5 border rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end gap-3">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2.5 border rounded text-gray-700 hover:bg-gray-100 font-medium">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium">Save Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
