@@ -1,10 +1,23 @@
-function login() {
-    if (document.getElementById('pin-input').value === '1234') {
+async function hashPassphrase(passphrase) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(passphrase);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+const SECURE_HASH = '82e5f94002be2e39ba3e86a7cc1dc4ca9bfad067d6734bb3eeed5c7291018216';
+
+async function login() {
+    const pin = document.getElementById('pin-input').value;
+    const hashedInput = await hashPassphrase(pin);
+    
+    if (hashedInput === SECURE_HASH) {
         document.getElementById('login-section').classList.add('hidden');
         document.getElementById('dashboard-section').classList.remove('hidden');
         switchTab('projects');
     } else {
-        alert('PIN salah. Silakan coba 1234');
+        alert('Access Denied. Incorrect Passphrase.');
     }
 }
 
