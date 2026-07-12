@@ -16,6 +16,19 @@ async function login() {
         document.getElementById('login-section').classList.add('hidden');
         document.getElementById('dashboard-section').classList.remove('hidden');
         switchTab('projects');
+        
+        // Auto-sync upon login if local magic server is active
+        try {
+            const projects = await getDB('projects');
+            const certificates = await getDB('certificates');
+            fetch('http://localhost:3000/sync', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ projects, certificates })
+            }).then(() => console.log('Data securely synced on login!'))
+              .catch(e => console.log('Magic server offline.'));
+        } catch(e) {}
+
     } else {
         alert('Access Denied. Incorrect Passphrase.');
     }
@@ -83,6 +96,21 @@ async function getDB(type) {
 async function saveDB(type, data) {
     await setVal('db_' + type, data);
     await renderTable(type);
+    
+    // MAGICAL AUTO-SYNC TO GITHUB
+    try {
+        const projects = await getDB('projects');
+        const certificates = await getDB('certificates');
+        
+        await fetch('http://localhost:3000/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ projects, certificates })
+        });
+        console.log('✅ Auto-synced securely to main website!');
+    } catch (e) {
+        console.log('Sync server not active. Running in local mode only.');
+    }
 }
 
 async function renderTable(type) {
@@ -377,5 +405,28 @@ async function resetDefaults() {
                 reject(req.error);
             };
         });
+    }
+}
+
+async function exportToWeb() {
+    try {
+        const projects = await getDB('projects');
+        const certificates = await getDB('certificates');
+        const exportData = JSON.stringify({ projects, certificates }, null, 4);
+        
+        await navigator.clipboard.writeText(exportData);
+        
+        const alertBox = document.getElementById('sync-alert');
+        if (alertBox) {
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 3000);
+        } else {
+            alert("✅ Data JSON berhasil di-copy ke Clipboard! Silakan paste di file data.txt.");
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Gagal menyalin data. Silakan coba lagi.");
     }
 }
