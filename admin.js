@@ -414,17 +414,17 @@ async function exportToWeb() {
         const certificates = await getDB('certificates');
         const exportData = JSON.stringify({ projects, certificates }, null, 4);
         
-        await navigator.clipboard.writeText(exportData);
+        const blob = new Blob([exportData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'portfolio_data_backup.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
         
-        const alertBox = document.getElementById('sync-alert');
-        if (alertBox) {
-            alertBox.classList.remove('hidden');
-            setTimeout(() => {
-                alertBox.classList.add('hidden');
-            }, 3000);
-        } else {
-            alert("✅ Data JSON berhasil di-copy ke Clipboard! Silakan paste di file data.txt.");
-        }
+        alert("✅ File 'portfolio_data_backup.json' berhasil didownload secara otomatis! Silakan pindahkan file tersebut ke dalam folder VS Code Anda.");
     } catch (e) {
         console.error(e);
         alert("Gagal menyalin data. Silakan coba lagi.");
