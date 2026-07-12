@@ -289,8 +289,19 @@ function renderProjects() {
 // ============================================
 // FILE HANDLER - Open or Download Files
 // ============================================
-function openOrDownloadFile(fileUrl) {
+function openOrDownloadFile(fileUrl, defaultName = 'Document.pdf') {
     if (!fileUrl || fileUrl === '#') return;
+
+    // Handle Blob or Data URLs reliably across all devices (especially mobile)
+    if (fileUrl.startsWith('blob:') || fileUrl.startsWith('data:')) {
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = defaultName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return;
+    }
 
     // If it's an external link (http/https), just open it
     if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
@@ -306,7 +317,7 @@ function openOrDownloadFile(fileUrl) {
         // Fallback: try downloading
         const link = document.createElement('a');
         link.href = fileUrl;
-        link.download = fileUrl.split('/').pop(); // Get filename from path
+        link.download = fileUrl.split('/').pop() || defaultName;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -716,7 +727,11 @@ function initCertificateModal() {
 
             // Get current pdf link from the button
             const pdfUrl = downloadBtn.getAttribute('href');
-            openOrDownloadFile(pdfUrl);
+            const certTitle = document.getElementById('modal-title').textContent || 'Certificate';
+            
+            // Clean title for filename (remove invalid characters)
+            const safeTitle = certTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            openOrDownloadFile(pdfUrl, `${safeTitle}.pdf`);
         });
     }
 
