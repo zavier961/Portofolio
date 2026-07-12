@@ -292,14 +292,24 @@ function renderProjects() {
 function openOrDownloadFile(fileUrl, defaultName = 'Document.pdf') {
     if (!fileUrl || fileUrl === '#') return;
 
-    // Handle Blob or Data URLs reliably across all devices (especially mobile)
+    // Handle Blob or Data URLs reliably across all devices
     if (fileUrl.startsWith('blob:') || fileUrl.startsWith('data:')) {
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = defaultName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        try {
+            // Attempt to View the PDF in a new tab first (Works on Desktop & Android Chrome)
+            const newWindow = window.open(fileUrl, '_blank');
+            if (!newWindow) {
+                // If popup blocker stops it, fallback to download immediately
+                throw new Error("Popup blocked");
+            }
+        } catch (e) {
+            // Fallback: Download the file (Required for iOS Safari and strict browsers)
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = defaultName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
         return;
     }
 
@@ -496,11 +506,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (mobileToggle && mobileMenu) {
         // Toggle menu visibility on hamburger click
+        // Mobile Menu Toggle
         mobileToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const isHidden = mobileMenu.classList.toggle('hidden');
             const isActive = mobileMenu.classList.toggle('active');
             mobileToggle.setAttribute('aria-expanded', !isHidden);
+            mobileToggle.style.opacity = isHidden ? '1' : '0';
+            mobileToggle.style.pointerEvents = isHidden ? 'auto' : 'none';
         });
 
         // Close menu on close button click
@@ -510,6 +523,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 mobileMenu.classList.remove('active');
                 mobileMenu.classList.add('hidden');
                 mobileToggle.setAttribute('aria-expanded', 'false');
+                mobileToggle.style.opacity = '1';
+                mobileToggle.style.pointerEvents = 'auto';
             });
         }
 
@@ -520,6 +535,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 mobileMenu.classList.remove('active');
                 mobileMenu.classList.add('hidden');
                 mobileToggle.setAttribute('aria-expanded', 'false');
+                mobileToggle.style.opacity = '1';
+                mobileToggle.style.pointerEvents = 'auto';
             });
         });
 
@@ -530,6 +547,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                     mobileMenu.classList.remove('active');
                     mobileMenu.classList.add('hidden');
                     mobileToggle.setAttribute('aria-expanded', 'false');
+                    mobileToggle.style.opacity = '1';
+                    mobileToggle.style.pointerEvents = 'auto';
                 }
             }
         });
@@ -540,6 +559,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 mobileMenu.classList.remove('active');
                 mobileMenu.classList.add('hidden');
                 mobileToggle.setAttribute('aria-expanded', 'false');
+                mobileToggle.style.opacity = '1';
+                mobileToggle.style.pointerEvents = 'auto';
             }
         });
     }
