@@ -262,7 +262,7 @@ body {
     stroke-width: 2;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .mobile-toggle-btn {
         display: none !important;
     }
@@ -317,7 +317,7 @@ body {
     visibility: hidden;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     #mobile-menu {
         display: none !important;
         opacity: 0;
@@ -1419,6 +1419,7 @@ body {
    MOBILE ARTICLE EXPERIENCE (DETIK STYLE)
    ============================================ */
 @media (max-width: 768px) {
+
     /* Full-screen Modals */
     .modal-overlay {
         padding: 0 !important;
@@ -1441,13 +1442,15 @@ body {
 
     .workshop-modal-content,
     .modal-content {
-        padding: 5rem 1.25rem 3rem !important; /* Extra top padding for close button */
+        padding: 5rem 1.25rem 3rem !important;
+        /* Extra top padding for close button */
     }
 
     /* Article Typography */
     .workshop-modal-title,
     .modal-title {
-        font-size: 1.85rem !important; /* ~30px */
+        font-size: 1.85rem !important;
+        /* ~30px */
         line-height: 1.2 !important;
         font-weight: 800 !important;
         margin-bottom: 0.75rem !important;
@@ -1465,7 +1468,8 @@ body {
 
     .workshop-description,
     .modal-text {
-        font-size: 1.15rem !important; /* ~18.4px (Detik style) */
+        font-size: 1.15rem !important;
+        /* ~18.4px (Detik style) */
         line-height: 1.7 !important;
         color: rgba(192, 192, 192, 0.9) !important;
         font-weight: 400 !important;
@@ -1549,8 +1553,13 @@ body {
         transform: none !important;
     }
 
-    .workshop-nav-prev { left: 1.5rem !important; }
-    .workshop-nav-next { right: 1.5rem !important; }
+    .workshop-nav-prev {
+        left: 1.5rem !important;
+    }
+
+    .workshop-nav-next {
+        right: 1.5rem !important;
+    }
 }
 
 @media (max-width: 768px) {

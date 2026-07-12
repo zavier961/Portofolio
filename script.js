@@ -63,11 +63,11 @@ const defaultCertificates = [
         "category": "science",
         "badge": "Scientific Paper",
         "description": "Teknologi Hibrid Elektrokoagulasi-Flotasi dan Biomedikal untuk Pemurnian Limbah Cair",
-        "certImage": "",
+        "certImage": "asset/Certificate_4th Runner Up_Scientific Paper_FUSE POLMAN Bandung_2025 - Muhammad Zavier Rizkayanto_page-0001_result.webp",
         "evidenceImages": [
-            "",
-            "",
-            ""
+            "asset/fuse/harapan 2 1_result.webp",
+            "asset/fuse/harapan 2_result.webp",
+            "asset/fuse/harapn 2.3_result.webp"
         ],
         "pdfLink": "./asset/Zahavir_SMKN4JAKARTA_FullPaper_TEKNOLOGI HIBRID ELEKTROKOAGULASI-FLOTASI DAN BIOMEDIKAL UNTUK SOLUSI PEMURNIAN LIMBAH CAIR BERKELANJUTAN.pdf",
         "theoryText": "Integrasi metode pra-perlakuan agen biomedikal (Eco-Enzyme & EM4) dengan proses elektrokoagulasi in situ untuk pemisahan flok polutan secara berkelanjutan.",
@@ -83,11 +83,11 @@ const defaultCertificates = [
         "category": "robotics",
         "badge": "Internet of Things",
         "description": "Sistem Peringatan Penebangan Liar (SIPEGA-IoT)",
-        "certImage": "",
+        "certImage": "asset/its/Certificate_2nd Place_IoT Competition_ITS_2025 - Muhammad Zavier Rizkayanto_result.webp",
         "evidenceImages": [
-            "",
-            "",
-            ""
+            "asset/its/its_result.webp",
+            "asset/its/sipega_result.webp",
+            "asset/its/tennovex_result.webp"
         ],
         "pdfLink": "./asset/its/Sinergi Hijau_SMKN4JAKARTA_PAPER_Rancang Bangun SIPEGA-IoT (Sistem Peringatan Penebangan Liar) Menggunakan Sensor Akustik dan Akselerometer 3-Sumbu Terintegrasi GPS dan Self-Sustaining Power.pdf",
         "theoryText": "Sistem deteksi deforestasi berbasis IoT menggunakan sensor akustik (suara gergaji mesin) dan akselerometer 3-sumbu untuk mendeteksi getaran pohon tumbang secara real-time.",
@@ -103,13 +103,13 @@ const defaultCertificates = [
         "category": "robotics",
         "badge": "Machine Learning & IoT",
         "description": "Sistem Peringatan Penebangan Liar Berbasis AI dengan Notifikasi SMS",
-        "certImage": "",
+        "certImage": "asset/uika/Certificate_2nd Place_Electrical Innovation_UIKA Bogor_2025 - Muhammad Zavier Rizkayanto_result_result.webp",
         "evidenceImages": [
-            "",
-            "",
-            ""
+            "asset/uika/bukti 1_result_result.webp",
+            "asset/uika/bukti 2_result_result.webp",
+            "asset/uika/bukti 3_result_result.webp"
         ],
-        "pdfLink": "Pengembangan_SIPEGA_IoT_AI_SMS.pdf",
+        "pdfLink": "",
         "theoryText": "Penerapan Edge AI untuk sensor fusion antara data akustik dan getaran. Sistem menggunakan logika klasifikasi untuk memastikan validitas ancaman sebelum mengirim peringatan.",
         "toolText": "ESP32, Sensor Suara, Akselerometer ADXL345, SIM800L GSM Module (SMS), GPS Neo-6M, TinyML, Solar Power.",
         "story": "Pengembangan versi kedua ini difokuskan pada akurasi deteksi di lapangan. Kami mengintegrasikan Machine Learning untuk menganalisis pola frekuensi suara gergaji dan getaran pohon secara bersamaan. Peringatan hanya akan dikirimkan melalui SMS jika kedua sensor mendeteksi aktivitas secara sinkron. Penggunaan SMS dipilih untuk menjamin notifikasi tetap terkirim meskipun di area hutan dengan sinyal internet (data) yang minim, sehingga lebih reliabel dibandingkan aplikasi chat.",
@@ -501,11 +501,18 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Mobile Menu Toggle
         mobileToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isHidden = mobileMenu.classList.toggle('hidden');
-            const isActive = mobileMenu.classList.toggle('active');
-            mobileToggle.setAttribute('aria-expanded', !isHidden);
-            mobileToggle.style.opacity = isHidden ? '1' : '0';
-            mobileToggle.style.pointerEvents = isHidden ? 'auto' : 'none';
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.style.display = 'flex';
+                mobileMenu.classList.add('active');
+                mobileToggle.setAttribute('aria-expanded', 'true');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.style.display = 'none';
+                mobileMenu.classList.remove('active');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+            }
         });
 
         // Close menu on close button click
@@ -514,9 +521,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 e.stopPropagation();
                 mobileMenu.classList.remove('active');
                 mobileMenu.classList.add('hidden');
+                mobileMenu.style.display = 'none';
                 mobileToggle.setAttribute('aria-expanded', 'false');
-                mobileToggle.style.opacity = '1';
-                mobileToggle.style.pointerEvents = 'auto';
             });
         }
 
@@ -526,9 +532,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 // Allow navigation to happen
                 mobileMenu.classList.remove('active');
                 mobileMenu.classList.add('hidden');
+                mobileMenu.style.display = 'none';
                 mobileToggle.setAttribute('aria-expanded', 'false');
-                mobileToggle.style.opacity = '1';
-                mobileToggle.style.pointerEvents = 'auto';
             });
         });
 
@@ -538,9 +543,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (!mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.remove('active');
                     mobileMenu.classList.add('hidden');
+                    mobileMenu.style.display = 'none';
                     mobileToggle.setAttribute('aria-expanded', 'false');
-                    mobileToggle.style.opacity = '1';
-                    mobileToggle.style.pointerEvents = 'auto';
                 }
             }
         });
@@ -550,9 +554,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
                 mobileMenu.classList.remove('active');
                 mobileMenu.classList.add('hidden');
+                mobileMenu.style.display = 'none';
                 mobileToggle.setAttribute('aria-expanded', 'false');
-                mobileToggle.style.opacity = '1';
-                mobileToggle.style.pointerEvents = 'auto';
             }
         });
     }
@@ -565,6 +568,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     initWorkshopModal();
     initHistoryAPI();
     initLightbox();
+    updateStats();
     renderCertificates(currentFilter);
     renderProjects();
 
@@ -579,53 +583,81 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 // ============================================
+// STATS UPDATER
+// ============================================
+function updateStats() {
+    const compCount = defaultCertificates.length;
+
+    let certCount = 0;
+    defaultCertificates.forEach(cert => {
+        if (Array.isArray(cert.certImage)) {
+            certCount += cert.certImage.length;
+        } else if (typeof cert.certImage === 'string' && cert.certImage.trim() !== '') {
+            certCount += 1;
+        }
+    });
+
+    const projCount = defaultProjects.length;
+
+    const statCerts = document.getElementById('stat-certs');
+    const statProjects = document.getElementById('stat-projects');
+    const statCompetitions = document.getElementById('stat-competitions');
+
+    if (statCerts) statCerts.textContent = certCount + '+';
+    if (statProjects) statProjects.textContent = projCount + '+';
+    if (statCompetitions) statCompetitions.textContent = compCount + '+';
+}
+
+// ============================================
 // NAVBAR
 // ============================================
 function initNavbar() {
     const navbar = document.getElementById('navbar');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.nav-link, .nav-link-mobile');
     const sections = document.querySelectorAll('section[id]');
     let isTicking = false;
 
-    // Fast scroll event for navbar background using requestAnimationFrame
+    // Fast scroll event for navbar background and bottom detection
     window.addEventListener('scroll', function () {
         if (!isTicking) {
             window.requestAnimationFrame(() => {
+                // Background change on scroll
                 if (window.scrollY > 100) {
                     navbar.classList.add('scrolled');
                 } else {
                     navbar.classList.remove('scrolled');
                 }
-                isTicking = false;
-            });
-            isTicking = true;
-        }
-    }, { passive: true }); // passive flag for smooth scrolling
 
-    // High performance section tracking using IntersectionObserver
-    if ('IntersectionObserver' in window) {
-        const observerOptions = {
-            root: null,
-            rootMargin: '-20% 0px -80% 0px',
-            threshold: 0
-        };
+                // Robust Scroll Spy logic
+                let currentId = "";
+                sections.forEach(section => {
+                    // Trigger section active if we scroll slightly past its top (adjust -200 for navbar height)
+                    const sectionTop = section.offsetTop;
+                    if (window.scrollY >= sectionTop - 200) {
+                        currentId = section.getAttribute('id');
+                    }
+                });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const currentId = entry.target.getAttribute('id');
+                // Force Contact active if at absolute bottom of page
+                if (Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100) {
+                    currentId = 'contact';
+                }
+
+                // Update active classes
+                if (currentId) {
                     navLinks.forEach(link => {
                         link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === currentId) {
+                        if (link.getAttribute('href') === '#' + currentId) {
                             link.classList.add('active');
                         }
                     });
                 }
-            });
-        }, observerOptions);
 
-        sections.forEach(section => observer.observe(section));
-    }
+                isTicking = false;
+            });
+            isTicking = true;
+        }
+    }, { passive: true });
 }
 
 // ============================================
