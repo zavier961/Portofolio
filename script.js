@@ -216,7 +216,8 @@ const defaultCertificates = [
         "pdfLink": "asset/idea 9/SISWA_Subtema Inovasi Pembelajaran_Muhammad Zavier Rizakaynto_SMKN 4 JAKARTA_OMNI-SCI SENSORIC BOARD.pdf",
         "certImage": [
             "asset/idea 9/1-1_result.webp",
-            "asset/idea 9/Salinan Best Presentation Siswa-1-1_result.webp"
+            "asset/idea 9/Salinan Best Presentation Siswa-1-1_result.webp",
+            "asset/idea 9/f7644238-91a5-44b2-b1ab-4a73a7e2abb4-1_result.webp"
         ],
         "evidenceImages": [
             "asset/idea 9/WhatsApp Image 2026-07-12 at 11.16.50_result.webp",
