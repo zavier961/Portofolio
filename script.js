@@ -217,6 +217,7 @@ const defaultCertificates = [
         "certImage": [
             "asset/idea 9/1-1_result.webp",
             "asset/idea 9/Salinan Best Presentation Siswa-1-1_result.webp",
+            "asset/idea 9/Muhammad Zavier Rizkayanto-1_result.webp",
             "asset/idea 9/f7644238-91a5-44b2-b1ab-4a73a7e2abb4-1_result.webp"
         ],
         "evidenceImages": [
@@ -605,7 +606,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 function updateStats() {
     let compCount = 0;
     let achieveCount = 0;
-    
+
     defaultCertificates.forEach(cert => {
         if (cert.type === 'achievement') {
             achieveCount++;
