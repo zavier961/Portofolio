@@ -225,6 +225,23 @@ const defaultCertificates = [
             "asset/idea 9/Screenshot 2026-07-12 110520_result.webp",
             "asset/idea 9/Screenshot 2026-07-12 110439_result.webp"
         ]
+    },
+    {
+        "id": 9,
+        "type": "achievement",
+        "title": "Peringkat VIII Nilai SIDANIRA T.P 2023–2024 – SMP Negeri 121 Jakarta",
+        "category": "academic",
+        "badge": "Top 10 Graduates Sidanira",
+        "description": "Penghargaan atas pencapaian akademik sebagai Peringkat ke-8 dari 10 Besar lulusan dengan Nilai SIDANIRA tertinggi di SMP Negeri 121 Jakarta, meraih nilai rata-rata 89,97.",
+        "certImage": "asset/Academic Award_Rank 8 SIDANIRA_ 10 Jun 2024 - Muhammad Zavier Rizkayanto-1_result.webp",
+        "evidenceImages": [],
+        "pdfLink": "",
+        "theoryText": "SIDANIRA (Sistem Pendataan Nilai Rapor) merupakan sistem resmi Dinas Pendidikan Provinsi DKI Jakarta yang mengintegrasikan akumulasi nilai rapor, prestasi akademik, dan non-akademik siswa selama masa studi sekolah menengah pertama sebagai instrumen seleksi dan pemetaan standardisasi mutu siswa.",
+        "toolText": "Kurikulum Merdeka/K-13 Nasional, Evaluasi Pembelajaran Komprehensif, Manajemen Waktu & Studi Konsisten.",
+        "story": "Mempertahankan performa akademik yang stabil sepanjang masa sekolah menengah merupakan tantangan yang membutuhkan konsistensi tinggi. Melalui manajemen waktu yang disiplin antara tugas sekolah dan ketertarikan awal pada bidang teknis, saya berhasil menjaga akumulasi nilai secara kompetitif. Puncaknya, pada kelulusan Tahun Pelajaran 2023–2024, kerja keras ini diakui oleh pihak sekolah melalui pemberian sertifikat penghargaan sebagai bagian dari 10 Besar lulusan terbaik di SMP Negeri 121 Jakarta. Masuk dalam peringkat ke-8 dengan rata-rata 89,97 menjadi validasi penting atas dedikasi belajar saya sekaligus menjadi fondasi kuat untuk melanjutkan studi ke jenjang mekatronika di SMK.",
+        "documentation": "",
+        "dateObtained": "2024-06-10",
+        "videoEmbed": ""
     }
 ];
 
@@ -586,7 +603,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 // STATS UPDATER
 // ============================================
 function updateStats() {
-    const compCount = defaultCertificates.length;
+    let compCount = 0;
+    let achieveCount = 0;
+    
+    defaultCertificates.forEach(cert => {
+        if (cert.type === 'achievement') {
+            achieveCount++;
+        } else {
+            compCount++;
+        }
+    });
 
     let certCount = 0;
     defaultCertificates.forEach(cert => {
@@ -602,10 +628,12 @@ function updateStats() {
     const statCerts = document.getElementById('stat-certs');
     const statProjects = document.getElementById('stat-projects');
     const statCompetitions = document.getElementById('stat-competitions');
+    const statAchievements = document.getElementById('stat-achievements');
 
     if (statCerts) statCerts.textContent = certCount + '+';
     if (statProjects) statProjects.textContent = projCount + '+';
     if (statCompetitions) statCompetitions.textContent = compCount + '+';
+    if (statAchievements) statAchievements.textContent = achieveCount + '+';
 }
 
 // ============================================
@@ -1035,9 +1063,9 @@ function openCertificateModal(certId) {
     document.getElementById('modal-cert-desc').textContent = fullDesc;
     document.getElementById('modal-cert-story').textContent = cert.story || "Story not available yet.";
 
-    // Download button - Hide for UIKA (ID 3) and SEAMEO (ID 4)
+    // Download button - Hide for UIKA (ID 3), SEAMEO (ID 4), ID 9, or if pdfLink is empty
     const downloadBtn = document.getElementById('modal-pdf');
-    if (certId === 3 || certId === 4) {
+    if (certId === 3 || certId === 4 || certId === 9 || !cert.pdfLink || cert.pdfLink.trim() === '') {
         downloadBtn.style.display = 'none';
     } else if (certId === 5) {
         // Grand Finalist (ID 5) - Show but change text to "View Article"
@@ -1189,9 +1217,9 @@ function openCertificateModal(certId) {
     document.querySelectorAll('.cert-tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.cert-tab-content').forEach(content => content.classList.remove('active'));
 
-    // Hide Documentation tab for ID 5 (Grand Finalist)
+    // Hide Documentation tab for ID 5 (Grand Finalist) and ID 9
     const docTabBtn = document.querySelector('.cert-tab-btn[data-tab="documentation"]');
-    if (certId === 5) {
+    if (certId === 5 || certId === 9) {
         docTabBtn.style.display = 'none';
     } else {
         docTabBtn.style.display = 'block';
