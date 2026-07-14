@@ -700,10 +700,35 @@ function initSmoothScroll() {
                 e.preventDefault();
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    const headerOffset = 100;
+                    const headerOffset = 0;
                     const elementPosition = targetElement.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    
+                    const startPosition = window.pageYOffset;
+                    const distance = offsetPosition - startPosition;
+                    const duration = 1200; // Super smooth duration
+                    let startTime = null;
+
+                    function easeInOutQuart(t, b, c, d) {
+                        t /= d / 2;
+                        if (t < 1) return c / 2 * t * t * t * t + b;
+                        t -= 2;
+                        return -c / 2 * (t * t * t * t - 2) + b;
+                    }
+
+                    function animation(currentTime) {
+                        if (startTime === null) startTime = currentTime;
+                        const timeElapsed = currentTime - startTime;
+                        const run = easeInOutQuart(timeElapsed, startPosition, distance, duration);
+                        window.scrollTo(0, run);
+                        if (timeElapsed < duration) {
+                            requestAnimationFrame(animation);
+                        } else {
+                            window.scrollTo(0, offsetPosition);
+                        }
+                    }
+
+                    requestAnimationFrame(animation);
                 }
             }
         });
