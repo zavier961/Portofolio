@@ -59,7 +59,7 @@
         .intro-ready .gear-spin-ccw{animation:1.35s cubic-bezier(.22,1,.36,1) both gear-load-ccw-boing,10s ease-in-out 1.35s infinite gear-idle-ccw}
         /* Gate Animations */
         #loading-screen{--gate-side-hold:200px;--gate-side-overlap:clamp(20px,5vw,80px);--gate-vertical-overlap:clamp(18px,4vh,64px);--gate-center-overlap:clamp(22px,4vw,56px);--gate-top-bottom-height:clamp(58%,62vh,68%)}
-        @media(max-width:768px){#loading-screen{--gate-side-hold:150px;--gate-side-overlap:clamp(26px,7vw,72px);--gate-vertical-overlap:clamp(22px,6vh,70px);--gate-center-overlap:clamp(28px,8vw,74px);--gate-top-bottom-height:clamp(60%,66vh,74%)}}
+        @media(max-width:768px){#loading-screen{--gate-side-hold:40px;--gate-side-overlap:clamp(26px,7vw,72px);--gate-vertical-overlap:clamp(22px,6vh,70px);--gate-center-overlap:clamp(28px,8vw,74px);--gate-top-bottom-height:clamp(60%,66vh,74%)}}
         .gate-panel{transition:transform .85s cubic-bezier(.77,0,.18,1);position:absolute;overflow:hidden}
         #gate-left.open{transform:translate(calc(-100% + var(--gate-side-hold)))}
         #gate-right.open{transform:translate(calc(100% - var(--gate-side-hold)))}
@@ -92,7 +92,7 @@
 <body class="bg-black/98 text-white font-['Poppins'] overflow-x-hidden">
 
     <!-- Loading Screen (Evolution Style) -->
-    <div id="loading-screen" style="z-index:9999;pointer-events:all;background-color:#000;width:100vw;height:100vh;position:fixed;inset:0;overflow:hidden;--gate-side-hold:200px;--gate-side-overlap:clamp(20px,5vw,80px);--gate-vertical-overlap:clamp(18px,4vh,64px);--gate-center-overlap:clamp(22px,4vw,56px);--gate-top-bottom-height:clamp(58%,62vh,68%);">
+    <div id="loading-screen" style="z-index:9999;pointer-events:all;background-color:#000;width:100vw;height:100vh;position:fixed;inset:0;overflow:hidden;">
       <div style="position:fixed;inset:0;">
         <div id="gate-right" class="gate-panel" style="right:calc(-1*var(--gate-side-overlap));width:calc(50% + var(--gate-side-overlap) + var(--gate-center-overlap));z-index:1;height:100%;top:0">
           <img src="./asset/gears/Vector%20217.svg" style="transform-origin:0;object-position:left center;transform:scale(1.04)" />
