@@ -700,7 +700,15 @@ function initSmoothScroll() {
                 e.preventDefault();
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    const headerOffset = 50;
+                    const navbar = document.getElementById('navbar');
+                    const navHeight = navbar ? navbar.offsetHeight : 0;
+                    const computedStyle = window.getComputedStyle(targetElement);
+                    const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+                    
+                    // Perfect alignment: Content (padding top) aligns just below navbar with 20px gap
+                    const desiredGap = 20;
+                    const headerOffset = navHeight + desiredGap - paddingTop;
+                    
                     const elementPosition = targetElement.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                     
